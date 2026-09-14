@@ -1,221 +1,264 @@
 
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Car-Mart Dashboard</title>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Car-Mart Dashboard</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#f0f2f5;font-family:system-ui,sans-serif;color:#222;font-size:12px}.H{background:linear-gradient(135deg,#0f1b2d,#1a2d4a);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}.H h1{color:#fff;font-size:15px;margin:0}.H p{color:rgba(255,255,255,.5);font-size:10px;margin:0}.H .b{display:flex;gap:6px}.H .b span{padding:3px 8px;border-radius:12px;font-size:9px;font-weight:600}.b1{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}.b2{background:rgba(255,153,0,.15);color:#FF9900;border:1px solid rgba(255,153,0,.3)}.b3{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3)}.W{max-width:1160px;margin:0 auto;padding:0 14px 40px}input[name=t]{display:none}.N{display:flex;gap:2px;margin:12px 0;background:#fff;border-radius:8px;padding:3px;border:1px solid #ddd;overflow-x:auto}.N label{flex:1;text-align:center;padding:8px 3px;border-radius:6px;cursor:pointer;font-size:10px;font-weight:500;color:#666;white-space:nowrap;min-width:70px}.N label:hover{background:#f5f5f5}#t1:checked~.W .N label[for=t1],#t2:checked~.W .N label[for=t2],#t3:checked~.W .N label[for=t3],#t4:checked~.W .N label[for=t4],#t5:checked~.W .N label[for=t5],#t6:checked~.W .N label[for=t6],#t7:checked~.W .N label[for=t7],#t8:checked~.W .N label[for=t8]{background:#0f1b2d;color:#fff}.X{display:none}#t1:checked~.W .X1,#t2:checked~.W .X2,#t3:checked~.W .X3,#t4:checked~.W .X4,#t5:checked~.W .X5,#t6:checked~.W .X6,#t7:checked~.W .X7,#t8:checked~.W .X8{display:block}.R{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.R5{grid-template-columns:repeat(5,1fr)}.K{background:#fff;border-radius:8px;padding:10px 12px;border:1px solid #e8e8e8;position:relative;overflow:hidden}.K::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}.Ka::after{background:#2563eb}.Kr::after{background:#dc2626}.Kg::after{background:#15803d}.Ko::after{background:#FF9900}.Kp::after{background:#7c3aed}.Kt::after{background:#0d9488}.K .l{font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:2px}.K .v{font-size:20px;font-weight:700;font-family:monospace;color:#0f1b2d}.K .d{font-size:9.5px;margin-top:1px}.dn{color:#dc2626}.dp{color:#15803d}.dw{color:#d97706}.du{color:#666}.C{background:#fff;border-radius:8px;padding:14px 16px;border:1px solid #e8e8e8;margin-bottom:10px}.C h3{font-size:12px;font-weight:600;color:#0f1b2d;margin-bottom:1px}.C .s{font-size:10px;color:#888;margin-bottom:8px}.G{display:grid;grid-template-columns:1fr 1fr;gap:10px}.bar{display:flex;align-items:center;margin-bottom:2px}.bar .n{width:80px;font-size:10px;color:#444;text-align:right;padding-right:6px;flex-shrink:0}.bar .t{flex:1;height:14px;background:#f0f2f5;border-radius:3px;position:relative}.bar .f{height:100%;border-radius:3px;position:absolute;left:0;top:0;background:linear-gradient(90deg,#2563eb,#3b82f6);opacity:.85}.bar .p{height:7px;border-radius:2px;position:absolute;left:0;top:3.5px;background:#cbd5e1;opacity:.35}.bar .m{position:absolute;top:-2px;bottom:-2px;width:2px;background:#dc2626;z-index:2}.bar .val{width:34px;font-size:9.5px;font-family:monospace;color:#333;padding-left:4px;font-weight:600}.sb{display:flex;align-items:center;margin-bottom:4px}.sb .n{width:80px;font-size:10px;color:#444;text-align:right;padding-right:6px;flex-shrink:0}.sb .t{flex:1;height:20px;display:flex;border-radius:3px;overflow:hidden}.sb .t div{height:100%}.sc{background:#22c55e}.s3{background:#facc15}.s6{background:#f97316}.s9{background:#dc2626}.sb .val{width:34px;font-size:9.5px;font-family:monospace;color:#333;padding-left:4px}.pb{margin-bottom:8px}.pb .h{display:flex;justify-content:space-between;font-size:10px;color:#666;margin-bottom:2px}.pb .h span:last-child{font-family:monospace;font-weight:600}.pb .tr{height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden}.pb .fl{height:100%;border-radius:3px}.hm{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:6px 0}.hm div{padding:5px 3px;border-radius:5px;text-align:center;color:#fff;font-weight:600}.hm .hn{font-size:7.5px;font-weight:400;opacity:.8}.hm .hv{font-family:monospace;font-size:11px}.r1{background:#dc2626}.r2{background:#ea580c}.r3{background:#d97706}.r4{background:#16a34a}.r5{background:#22c55e}.ins{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:3px solid #FF9900;padding:8px 10px;border-radius:0 6px 6px 0;margin-top:10px;font-size:11px;color:#444;line-height:1.4}.ins strong{color:#0f1b2d}.ig{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-left-color:#15803d}.fc{display:flex;align-items:flex-end;gap:2px;height:140px;padding-bottom:4px}.fc div{flex:1;border-radius:3px 3px 0 0;position:relative}.fc .lb{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);font-size:7px;color:#888;white-space:nowrap}.fc .vl{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:8px;font-family:monospace;color:#333;white-space:nowrap;font-weight:600}table{width:100%;border-collapse:collapse;font-size:10px}th{text-align:left;color:#666;font-weight:600;padding:5px 4px;border-bottom:2px solid #ddd;font-size:8.5px;text-transform:uppercase;position:sticky;top:0;background:#fff}td{padding:4px;color:#222;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:9.5px}.ln{font-family:system-ui,sans-serif;font-weight:500;color:#0f1b2d}.ts{max-height:340px;overflow-y:auto;border-radius:6px;border:1px solid #eee}.bd{display:inline-block;padding:1px 5px;border-radius:6px;font-size:8px;font-weight:600}.bc{background:#fef2f2;color:#dc2626}.bw{background:#fffbeb;color:#d97706}.bo{background:#f0fdf4;color:#15803d}.al{display:flex;gap:8px;padding:10px;border-radius:8px;margin-bottom:6px;border:1px solid #e8e8e8;align-items:flex-start}.al.ac{background:#fef2f2;border-color:#fecaca}.al.aw{background:#fffbeb;border-color:#fde68a}.al.ai{background:#eff6ff;border-color:#bfdbfe}.al .ic{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff}.al .ic.cr{background:#dc2626}.al .ic.wr{background:#d97706}.al .ic.ir{background:#2563eb}.al h4{font-size:11px;font-weight:600;color:#0f1b2d;margin-bottom:1px}.al .desc{font-size:10px;color:#555;line-height:1.3}.al .meta{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}.al .tag{padding:1px 6px;border-radius:3px;font-size:8px;font-weight:600;background:rgba(0,0,0,.05);color:#444}.al .act{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:600;background:#0f1b2d;color:#fff}.ch{max-width:560px}.ch .u{padding:8px 10px;border-radius:10px;margin-bottom:5px;background:linear-gradient(135deg,#0f1b2d,#1e3a5f);color:#fff;margin-left:60px;border-bottom-right-radius:2px;font-size:11px}.ch .a{padding:8px 10px;border-radius:10px;margin-bottom:5px;background:#fff;border:1px solid #e0e0e0;margin-right:60px;border-bottom-left-radius:2px;font-size:11px}.ch .a .lbl{font-size:8px;text-transform:uppercase;color:#FF9900;font-weight:700;margin-bottom:2px}.chips{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap}.chip{padding:2px 7px;border-radius:10px;font-size:9px;border:1px solid #ddd;color:#555;background:#f9f9f9}.roi{background:linear-gradient(135deg,#0f1b2d,#1a2d4a);border-radius:8px;padding:16px;color:#fff;margin-bottom:10px}.roi h3{color:#fff}.roi .s{color:rgba(255,255,255,.5)}.roi .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.roi .ri{background:rgba(255,255,255,.08);border-radius:6px;padding:8px;text-align:center;border:1px solid rgba(255,255,255,.1)}.roi .rv{font-size:18px;font-weight:700;font-family:monospace;color:#FF9900}.roi .rl{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px}.tl{position:relative;padding-left:24px}.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:#e0e0e0}.tl .i{position:relative;margin-bottom:14px}.tl .dot{position:absolute;left:-20px;top:2px;width:10px;height:10px;border-radius:50%;border:2px solid #fff}.tl .dot.dg{background:#22c55e;box-shadow:0 0 0 2px #22c55e}.tl .dot.do{background:#FF9900;box-shadow:0 0 0 2px #FF9900}.tl .dot.dd{background:#e0e0e0;box-shadow:0 0 0 2px #e0e0e0}.tl h4{font-size:11px;font-weight:600;color:#0f1b2d}.tl .tp{font-size:10px;color:#666;margin-top:1px;line-height:1.3}.tl .tt{display:inline-block;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:600;margin-top:2px}.mn{padding:6px;background:#f8f9fb;border-radius:4px}.mn .ml{font-size:9px;color:#888}.mn .mv{font-size:14px;font-weight:700;font-family:monospace;color:#0f1b2d}.mn .md{font-size:9px}.ft{text-align:center;padding:16px;font-size:9px;color:#aaa;border-top:1px solid #e8e8e8;margin-top:16px}.lg{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap;font-size:10px;color:#555}.lg .dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:2px}@media(max-width:768px){.R,.R5{grid-template-columns:repeat(2,1fr)}.G,.roi .rg{grid-template-columns:1fr}.hm{grid-template-columns:repeat(3,1fr)}}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#f0f2f5;font-family:system-ui,sans-serif;color:#222;font-size:12px}
+.H{background:linear-gradient(135deg,#0f1b2d,#1a2d4a);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.H h1{color:#fff;font-size:15px}.H p{color:rgba(255,255,255,.5);font-size:10px}
+.W{max-width:1100px;margin:0 auto;padding:0 12px 30px}
+input[name=t]{display:none}
+.N{display:flex;gap:2px;margin:10px 0;background:#fff;border-radius:8px;padding:3px;border:1px solid #ddd;overflow-x:auto}
+.N label{flex:1;text-align:center;padding:7px 2px;border-radius:6px;cursor:pointer;font-size:10px;font-weight:500;color:#666;white-space:nowrap;min-width:60px}
+#t1:checked~.W .N label[for=t1],#t2:checked~.W .N label[for=t2],#t3:checked~.W .N label[for=t3],#t4:checked~.W .N label[for=t4],#t5:checked~.W .N label[for=t5],#t6:checked~.W .N label[for=t6],#t7:checked~.W .N label[for=t7],#t8:checked~.W .N label[for=t8]{background:#0f1b2d;color:#fff}
+.X{display:none}
+#t1:checked~.W .X1,#t2:checked~.W .X2,#t3:checked~.W .X3,#t4:checked~.W .X4,#t5:checked~.W .X5,#t6:checked~.W .X6,#t7:checked~.W .X7,#t8:checked~.W .X8{display:block}
+.R{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.R5{grid-template-columns:repeat(5,1fr)}
+.K{background:#fff;border-radius:7px;padding:8px 10px;border:1px solid #e8e8e8;border-top:3px solid #ddd}
+.K .l{font-size:8px;text-transform:uppercase;color:#888}.K .v{font-size:18px;font-weight:700;font-family:monospace;color:#0f1b2d}.K .d{font-size:9px}
+.dn{color:#dc2626}.dp{color:#15803d}.dw{color:#d97706}.du{color:#666}
+.C{background:#fff;border-radius:7px;padding:12px;border:1px solid #e8e8e8;margin-bottom:8px}
+.C h3{font-size:11px;font-weight:600;color:#0f1b2d}.C .s{font-size:9px;color:#888;margin-bottom:6px}
+.G{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bar{display:flex;align-items:center;margin-bottom:2px}
+.bar .n{width:70px;font-size:9px;color:#444;text-align:right;padding-right:4px}
+.bar .t{flex:1;height:12px;background:#f0f2f5;border-radius:3px;position:relative}
+.bar .f{height:100%;border-radius:3px;position:absolute;left:0;top:0;background:#2563eb;opacity:.85}
+.bar .m{position:absolute;top:-2px;bottom:-2px;width:2px;background:#dc2626}
+.bar .vl{width:30px;font-size:9px;font-family:monospace;padding-left:3px;font-weight:600}
+.sb{display:flex;align-items:center;margin-bottom:3px}
+.sb .n{width:70px;font-size:9px;color:#444;text-align:right;padding-right:4px}
+.sb .t{flex:1;height:16px;display:flex;border-radius:3px;overflow:hidden}
+.sb .t div{height:100%}
+.sc{background:#22c55e}.s3{background:#facc15}.s6{background:#f97316}.s9{background:#dc2626}
+.pb{margin-bottom:6px}
+.pb .h{display:flex;justify-content:space-between;font-size:9px;color:#666;margin-bottom:1px}
+.pb .h span:last-child{font-family:monospace;font-weight:600}
+.pb .tr{height:5px;background:#f0f2f5;border-radius:3px;overflow:hidden}
+.pb .fl{height:100%;border-radius:3px}
+.hm{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin:4px 0}
+.hm div{padding:3px 2px;border-radius:4px;text-align:center;color:#fff;font-weight:600;font-size:9px}
+.hm .hn{font-size:7px;font-weight:400;opacity:.8}
+.r1{background:#dc2626}.r2{background:#ea580c}.r3{background:#d97706}.r4{background:#16a34a}.r5{background:#22c55e}
+.ins{background:#fffbeb;border-left:3px solid #FF9900;padding:6px 8px;border-radius:0 5px 5px 0;margin-top:8px;font-size:10px;color:#444}
+.ig{background:#f0fdf4;border-left-color:#15803d}
+.fc{display:flex;align-items:flex-end;gap:2px;height:110px;padding-bottom:4px}
+.fc div{flex:1;border-radius:3px 3px 0 0;position:relative}
+.fc .lb{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-size:7px;color:#888;white-space:nowrap}
+.fc .vv{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:7px;font-family:monospace;color:#333;font-weight:600;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:9px}
+th{text-align:left;color:#666;font-weight:600;padding:3px;border-bottom:2px solid #ddd;font-size:8px;text-transform:uppercase}
+td{padding:3px;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:9px}
+.ln{font-family:system-ui,sans-serif;font-weight:500;color:#0f1b2d}
+.ts{max-height:260px;overflow-y:auto;border-radius:5px;border:1px solid #eee}
+.bd{display:inline-block;padding:1px 4px;border-radius:4px;font-size:7px;font-weight:600}
+.bc{background:#fef2f2;color:#dc2626}.bw{background:#fffbeb;color:#d97706}.bo{background:#f0fdf4;color:#15803d}
+.al{display:flex;gap:6px;padding:8px;border-radius:6px;margin-bottom:4px;border:1px solid #e8e8e8}
+.al.ac{background:#fef2f2;border-color:#fecaca}.al.aw{background:#fffbeb;border-color:#fde68a}.al.ai{background:#eff6ff;border-color:#bfdbfe}
+.al h4{font-size:10px;font-weight:600;color:#0f1b2d}.al .ds{font-size:9px;color:#555}
+.al .tg{padding:1px 4px;border-radius:3px;font-size:7px;font-weight:600;background:rgba(0,0,0,.05);color:#444;display:inline-block;margin:2px 2px 0 0}
+.al .at{display:inline-block;margin-top:3px;padding:2px 6px;border-radius:3px;font-size:8px;font-weight:600;background:#0f1b2d;color:#fff}
+.ch .u{padding:6px 8px;border-radius:8px;margin:0 0 4px 40px;background:#0f1b2d;color:#fff;font-size:10px}
+.ch .a{padding:6px 8px;border-radius:8px;margin:0 40px 4px 0;background:#fff;border:1px solid #ddd;font-size:10px}
+.ch .a .lb{font-size:7px;color:#FF9900;font-weight:700}
+.chip{padding:1px 5px;border-radius:6px;font-size:8px;border:1px solid #ddd;color:#555;display:inline-block;margin:1px}
+.roi{background:linear-gradient(135deg,#0f1b2d,#1a2d4a);border-radius:7px;padding:12px;color:#fff;margin-bottom:8px}
+.roi h3{color:#fff;font-size:12px}.roi .s{color:rgba(255,255,255,.5);font-size:9px}
+.roi .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.roi .ri{background:rgba(255,255,255,.08);border-radius:5px;padding:6px;text-align:center;border:1px solid rgba(255,255,255,.1)}
+.roi .rv{font-size:16px;font-weight:700;font-family:monospace;color:#FF9900}
+.roi .rl{font-size:8px;color:rgba(255,255,255,.6)}
+.tl{padding-left:20px;position:relative}.tl::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:#e0e0e0}
+.tl .i{position:relative;margin-bottom:10px}
+.tl .dt{position:absolute;left:-16px;top:2px;width:8px;height:8px;border-radius:50%;border:2px solid #fff}
+.tl h4{font-size:10px;font-weight:600;color:#0f1b2d}.tl .tp{font-size:9px;color:#666}
+.tl .tt{display:inline-block;padding:1px 4px;border-radius:3px;font-size:7px;font-weight:600;margin-top:1px}
+.ft{text-align:center;padding:12px;font-size:8px;color:#aaa;border-top:1px solid #e8e8e8;margin-top:12px}
+@media(max-width:768px){.R,.R5{grid-template-columns:repeat(2,1fr)}.G,.roi .rg{grid-template-columns:1fr}.hm{grid-template-columns:repeat(3,1fr)}}
 </style></head><body>
-<div class="H"><div><h1>Loan Portfolio Health & Collections Intelligence</h1><p>America's Car-Mart • Amazon QuickSight • Sep 14, 2026</p></div><div class="b"><span class="b1">● LIVE</span><span class="b2">SPICE</span><span class="b3">ML 91.2%</span></div></div>
-<input type="radio" name="t" id="t1" checked><input type="radio" name="t" id="t2"><input type="radio" name="t" id="t3"><input type="radio" name="t" id="t4"><input type="radio" name="t" id="t5"><input type="radio" name="t" id="t6"><input type="radio" name="t" id="t7"><input type="radio" name="t" id="t8">
-<div class="W"><div class="N"><label for="t1">📊 Overview</label><label for="t2">📋 Aging</label><label for="t3">🤖 ML Forecast</label><label for="t4">🔍 Locations</label><label for="t5">🔔 Alerts</label><label for="t6">💬 AI Agent</label><label for="t7">💰 ROI</label><label for="t8">🚀 Roadmap</label></div>
+<div class="H"><div><h1>Loan Portfolio Health & Collections Intelligence</h1><p>America's Car-Mart • Amazon QuickSight • Sep 14, 2026</p></div></div>
+<input type="radio" name="t" id="t1" checked><input type="radio" name="t" id="t2"><input type="radio" name="t" id="t3"><input type="radio" name="t" id="t4"><input type="radio" name="t" id="t5"><input type="radio" name="t" id="t6"><input type="radio" name="t" id="t7"><input type="radio" name="t" id="t8"><div class="W"><div class="N"><label for="t1">📊 Overview</label><label for="t2">📋 Aging</label><label for="t3">🤖 ML</label><label for="t4">🔍 Locations</label><label for="t5">🔔 Alerts</label><label for="t6">💬 AI</label><label for="t7">💰 ROI</label><label for="t8">🚀 Roadmap</label></div>
 
-<!--TAB1-->
+<!--TAB 1: OVERVIEW-->
 <div class="X X1"><div class="R R5">
-<div class="K Ko"><div class="l">PORTFOLIO</div><div class="v">$730.2M</div><div class="d dw">Annual collections</div></div>
-<div class="K Kr"><div class="l">DEFAULT RATE</div><div class="v">23.0%</div><div class="d dn">▲ 1.2% YoY</div></div>
-<div class="K Ka"><div class="l">ACTIVE LOANS</div><div class="v">8,524</div><div class="d dn">▼ 14.3% YoY</div></div>
-<div class="K Kg"><div class="l">COLLECTION RATE</div><div class="v">81.2%</div><div class="d dp">▲ 0.8% QoQ</div></div>
-<div class="K Kp"><div class="l">90+ DPD</div><div class="v">$4.2M</div><div class="d dn">298 accounts</div></div>
-</div><div class="G"><div class="C"><h3>Default Rate by Location</h3><div class="s">Current vs Prior — Red=23%</div>
-<div class="bar"><div class="n">Clarksville</div><div class="t"><div class="f" style="width:79.8%"></div><div class="p" style="width:67.5%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#dc2626">31.9</div></div>
-<div class="bar"><div class="n">Hot Springs</div><div class="t"><div class="f" style="width:74.8%"></div><div class="p" style="width:62.5%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#dc2626">29.9</div></div>
-<div class="bar"><div class="n">Rogers</div><div class="t"><div class="f" style="width:71.3%"></div><div class="p" style="width:70%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#dc2626">28.5</div></div>
-<div class="bar"><div class="n">Springfield</div><div class="t"><div class="f" style="width:68%"></div><div class="p" style="width:59.3%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#d97706">27.2</div></div>
-<div class="bar"><div class="n">Tulsa</div><div class="t"><div class="f" style="width:67.8%"></div><div class="p" style="width:58.5%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#d97706">27.1</div></div>
-<div class="bar"><div class="n">Fayetteville</div><div class="t"><div class="f" style="width:63.5%"></div><div class="p" style="width:65%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#d97706">25.4</div></div>
-<div class="bar"><div class="n">Russellville</div><div class="t"><div class="f" style="width:62.3%"></div><div class="p" style="width:59.8%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#d97706">24.9</div></div>
-<div class="bar"><div class="n">Jonesboro</div><div class="t"><div class="f" style="width:59.3%"></div><div class="p" style="width:59%"></div><div class="m" style="left:57.5%"></div></div><div class="val">23.7</div></div>
-<div class="bar"><div class="n">Memphis</div><div class="t"><div class="f" style="width:54.5%"></div><div class="p" style="width:60%"></div><div class="m" style="left:57.5%"></div></div><div class="val">21.8</div></div>
-<div class="bar"><div class="n">Texarkana</div><div class="t"><div class="f" style="width:42.8%"></div><div class="p" style="width:49.3%"></div><div class="m" style="left:57.5%"></div></div><div class="val" style="color:#15803d">17.1</div></div>
+<div class="K" style="border-top-color:#FF9900"><div class="l">PORTFOLIO</div><div class="v">$730.2M</div><div class="d dw">Annual</div></div>
+<div class="K" style="border-top-color:#dc2626"><div class="l">DEFAULT</div><div class="v">23.0%</div><div class="d dn">▲1.2% YoY</div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">LOANS</div><div class="v">8,524</div><div class="d dn">▼14.3%</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">COLLECT</div><div class="v">81.2%</div><div class="d dp">▲0.8%</div></div>
+<div class="K" style="border-top-color:#7c3aed"><div class="l">90+ DPD</div><div class="v">$4.2M</div><div class="d dn">298 accts</div></div>
+</div><div class="G"><div class="C"><h3>Default by Location</h3><div class="s">Red=23% benchmark</div>
+<div class="bar"><div class="n">Clarksville</div><div class="t"><div class="f" style="width:79.8%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#dc2626">31.9</div></div>
+<div class="bar"><div class="n">Hot Springs</div><div class="t"><div class="f" style="width:74.8%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#dc2626">29.9</div></div>
+<div class="bar"><div class="n">Rogers</div><div class="t"><div class="f" style="width:71.3%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#dc2626">28.5</div></div>
+<div class="bar"><div class="n">Springfield</div><div class="t"><div class="f" style="width:68%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#d97706">27.2</div></div>
+<div class="bar"><div class="n">Tulsa</div><div class="t"><div class="f" style="width:67.8%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#d97706">27.1</div></div>
+<div class="bar"><div class="n">Fayetteville</div><div class="t"><div class="f" style="width:63.5%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#d97706">25.4</div></div>
+<div class="bar"><div class="n">Jonesboro</div><div class="t"><div class="f" style="width:59.3%"></div><div class="m" style="left:57.5%"></div></div><div class="vl">23.7</div></div>
+<div class="bar"><div class="n">Memphis</div><div class="t"><div class="f" style="width:54.5%"></div><div class="m" style="left:57.5%"></div></div><div class="vl">21.8</div></div>
+<div class="bar"><div class="n">Little Rock</div><div class="t"><div class="f" style="width:50.3%"></div><div class="m" style="left:57.5%"></div></div><div class="vl">20.1</div></div>
+<div class="bar"><div class="n">Texarkana</div><div class="t"><div class="f" style="width:42.8%"></div><div class="m" style="left:57.5%"></div></div><div class="vl" style="color:#15803d">17.1</div></div>
 </div><div>
-<div class="C"><h3>Risk Heatmap</h3><div class="s">20 locations</div><div class="hm"><div class="r1"><div class="hn">Clarksville</div><div class="hv">31.9%</div></div><div class="r1"><div class="hn">Hot Springs</div><div class="hv">29.9%</div></div><div class="r2"><div class="hn">Rogers</div><div class="hv">28.5%</div></div><div class="r2"><div class="hn">Springfield</div><div class="hv">27.2%</div></div><div class="r2"><div class="hn">Tulsa</div><div class="hv">27.1%</div></div><div class="r3"><div class="hn">Fayetteville</div><div class="hv">25.4%</div></div><div class="r3"><div class="hn">Russellville</div><div class="hv">24.9%</div></div><div class="r3"><div class="hn">Batesville</div><div class="hv">24.7%</div></div><div class="r3"><div class="hn">Jonesboro</div><div class="hv">23.7%</div></div><div class="r3"><div class="hn">Searcy</div><div class="hv">23.0%</div></div><div class="r4"><div class="hn">Muskogee</div><div class="hv">22.1%</div></div><div class="r4"><div class="hn">Memphis</div><div class="hv">21.8%</div></div><div class="r4"><div class="hn">Conway</div><div class="hv">21.3%</div></div><div class="r4"><div class="hn">Little Rock</div><div class="hv">20.1%</div></div><div class="r4"><div class="hn">Harrison</div><div class="hv">20.0%</div></div><div class="r5"><div class="hn">Joplin</div><div class="hv">19.8%</div></div><div class="r5"><div class="hn">OKC</div><div class="hv">19.7%</div></div><div class="r5"><div class="hn">Fort Smith</div><div class="hv">19.6%</div></div><div class="r5"><div class="hn">Pine Bluff</div><div class="hv">19.1%</div></div><div class="r5"><div class="hn">Texarkana</div><div class="hv">17.1%</div></div></div></div>
-<div class="C"><h3>Portfolio</h3><div class="s">8,524 loans</div><div style="display:flex;align-items:center;gap:12px;justify-content:center"><div style="width:80px;height:80px;border-radius:50%;background:conic-gradient(#22c55e 0% 76.7%,#facc15 76.7% 89.9%,#f97316 89.9% 96.5%,#dc2626 96.5%);display:flex;align-items:center;justify-content:center"><div style="width:52px;height:52px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:14px;font-weight:700;font-family:monospace">8,524</div></div></div><div style="font-size:10px;line-height:1.8">Current 76.7%<br>30-Day 13.2%<br>60-Day 6.6%<br>90+ 3.5%</div></div></div>
+<div class="C"><h3>Risk Heatmap</h3><div class="s">20 locations</div><div class="hm"><div class="r1"><div class="hn">Clarksville</div>31.9%</div><div class="r1"><div class="hn">Hot Springs</div>29.9%</div><div class="r2"><div class="hn">Rogers</div>28.5%</div><div class="r2"><div class="hn">Springfield</div>27.2%</div><div class="r2"><div class="hn">Tulsa</div>27.1%</div><div class="r3"><div class="hn">Fayetteville</div>25.4%</div><div class="r3"><div class="hn">Russellville</div>24.9%</div><div class="r3"><div class="hn">Batesville</div>24.7%</div><div class="r3"><div class="hn">Jonesboro</div>23.7%</div><div class="r3"><div class="hn">Searcy</div>23.0%</div><div class="r4"><div class="hn">Muskogee</div>22.1%</div><div class="r4"><div class="hn">Memphis</div>21.8%</div><div class="r4"><div class="hn">Conway</div>21.3%</div><div class="r4"><div class="hn">Little Rock</div>20.1%</div><div class="r4"><div class="hn">Harrison</div>20.0%</div><div class="r5"><div class="hn">Joplin</div>19.8%</div><div class="r5"><div class="hn">OKC</div>19.7%</div><div class="r5"><div class="hn">Ft Smith</div>19.6%</div><div class="r5"><div class="hn">Pine Bluff</div>19.1%</div><div class="r5"><div class="hn">Texarkana</div>17.1%</div></div></div>
+<div class="C"><h3>Portfolio</h3><div class="s">8,524 loans</div><div style="display:flex;align-items:center;gap:8px;justify-content:center"><div style="width:70px;height:70px;border-radius:50%;background:conic-gradient(#22c55e 0% 76.7%,#facc15 76.7% 89.9%,#f97316 89.9% 96.5%,#dc2626 96.5%);display:flex;align-items:center;justify-content:center"><div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:monospace">8,524</div></div><div style="font-size:9px;line-height:1.6">Current 76.7%<br>30d 13.2%<br>60d 6.6%<br>90+ 3.5%</div></div></div>
 </div></div>
-<div class="ins"><strong>⚠️</strong> Clarksville & Hot Springs (+4.9% QoQ) exceed 2σ. <strong>Immediate review.</strong></div></div>
+<div class="ins"><strong>⚠️</strong> Clarksville & Hot Springs exceed 2σ.</div></div>
 
-<!--TAB2-->
+<!--TAB 2: AGING-->
 <div class="X X2"><div class="R">
-<div class="K Kg"><div class="l">CURRENT</div><div class="v">6,536</div><div class="d dp">76.7%</div></div>
-<div class="K Ko"><div class="l">30-DAY</div><div class="v">1,127</div><div class="d dw">Intervention</div></div>
-<div class="K Kr"><div class="l">60-DAY</div><div class="v">563</div><div class="d dn">Escalation</div></div>
-<div class="K Kr"><div class="l">90+</div><div class="v">298</div><div class="d dn">$4.2M</div></div>
-</div><div class="G"><div class="C"><h3>Aging — Top 10</h3><div class="s">By bucket</div>
-<div class="sb"><div class="n">Clarksville</div><div class="t"><div class="sc" style="width:79.7%"></div><div class="s3" style="width:10.6%"></div><div class="s6" style="width:7.7%"></div><div class="s9" style="width:2%"></div></div><div class="val">404</div></div>
-<div class="sb"><div class="n">Hot Springs</div><div class="t"><div class="sc" style="width:71%"></div><div class="s3" style="width:14.4%"></div><div class="s6" style="width:9.3%"></div><div class="s9" style="width:5.4%"></div></div><div class="val">410</div></div>
-<div class="sb"><div class="n">Rogers</div><div class="t"><div class="sc" style="width:78.7%"></div><div class="s3" style="width:9.9%"></div><div class="s6" style="width:7%"></div><div class="s9" style="width:4.3%"></div></div><div class="val">625</div></div>
-<div class="sb"><div class="n">Springfield</div><div class="t"><div class="sc" style="width:84.2%"></div><div class="s3" style="width:8.7%"></div><div class="s6" style="width:5.1%"></div><div class="s9" style="width:2%"></div></div><div class="val">450</div></div>
-<div class="sb"><div class="n">Tulsa</div><div class="t"><div class="sc" style="width:77.4%"></div><div class="s3" style="width:13.9%"></div><div class="s6" style="width:6.5%"></div><div class="s9" style="width:2.2%"></div></div><div class="val">368</div></div>
-<div class="sb"><div class="n">Jonesboro</div><div class="t"><div class="sc" style="width:72%"></div><div class="s3" style="width:17.3%"></div><div class="s6" style="width:7.2%"></div><div class="s9" style="width:3.5%"></div></div><div class="val">567</div></div>
-</div><div>
-<div class="C"><h3>Roll Rates</h3><div class="s">Monthly</div>
+<div class="K" style="border-top-color:#15803d"><div class="l">CURRENT</div><div class="v">6,536</div><div class="d dp">76.7%</div></div>
+<div class="K" style="border-top-color:#FF9900"><div class="l">30-DAY</div><div class="v">1,127</div><div class="d dw">13.2%</div></div>
+<div class="K" style="border-top-color:#dc2626"><div class="l">60-DAY</div><div class="v">563</div><div class="d dn">6.6%</div></div>
+<div class="K" style="border-top-color:#dc2626"><div class="l">90+</div><div class="v">298</div><div class="d dn">$4.2M</div></div>
+</div><div class="G"><div class="C"><h3>Aging Top 6</h3><div class="s">Stacked</div>
+<div class="sb"><div class="n">Clarksville</div><div class="t"><div class="sc" style="width:79.7%"></div><div class="s3" style="width:10.6%"></div><div class="s6" style="width:7.7%"></div><div class="s9" style="width:2%"></div></div></div>
+<div class="sb"><div class="n">Hot Springs</div><div class="t"><div class="sc" style="width:71%"></div><div class="s3" style="width:14.4%"></div><div class="s6" style="width:9.3%"></div><div class="s9" style="width:5.4%"></div></div></div>
+<div class="sb"><div class="n">Rogers</div><div class="t"><div class="sc" style="width:78.7%"></div><div class="s3" style="width:9.9%"></div><div class="s6" style="width:7%"></div><div class="s9" style="width:4.3%"></div></div></div>
+<div class="sb"><div class="n">Springfield</div><div class="t"><div class="sc" style="width:84.2%"></div><div class="s3" style="width:8.7%"></div><div class="s6" style="width:5.1%"></div><div class="s9" style="width:2%"></div></div></div>
+<div class="sb"><div class="n">Tulsa</div><div class="t"><div class="sc" style="width:77.4%"></div><div class="s3" style="width:13.9%"></div><div class="s6" style="width:6.5%"></div><div class="s9" style="width:2.2%"></div></div></div>
+<div class="sb"><div class="n">Jonesboro</div><div class="t"><div class="sc" style="width:72%"></div><div class="s3" style="width:17.3%"></div><div class="s6" style="width:7.2%"></div><div class="s9" style="width:3.5%"></div></div></div>
+</div><div><div class="C"><h3>Roll Rates</h3><div class="s">Monthly</div>
 <div class="pb"><div class="h"><span>Current→30d</span><span style="color:#d97706">8.2%</span></div><div class="tr"><div class="fl" style="width:8.2%;background:#facc15"></div></div></div>
 <div class="pb"><div class="h"><span>30d→60d</span><span style="color:#ea580c">38.5%</span></div><div class="tr"><div class="fl" style="width:38.5%;background:#f97316"></div></div></div>
 <div class="pb"><div class="h"><span>60d→90+</span><span style="color:#dc2626">52.9%</span></div><div class="tr"><div class="fl" style="width:52.9%;background:#dc2626"></div></div></div>
-<div class="pb"><div class="h"><span>90+→Charge-Off</span><span style="color:#991b1b">71.3%</span></div><div class="tr"><div class="fl" style="width:71.3%;background:#991b1b"></div></div></div>
-</div>
-<div class="C"><h3>Impact</h3><div class="s">Reduce 30→60 by 10pts</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px"><div style="padding:6px;background:#f0fdf4;border-radius:5px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:14px;font-weight:700;color:#15803d">~113</div><div style="font-size:8px;color:#666">Fewer 60d/mo</div></div><div style="padding:6px;background:#f0fdf4;border-radius:5px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:14px;font-weight:700;color:#15803d">~60</div><div style="font-size:8px;color:#666">Fewer 90+/mo</div></div><div style="padding:6px;background:#f0fdf4;border-radius:5px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:14px;font-weight:700;color:#15803d">$7.2M</div><div style="font-size:8px;color:#666">Annual</div></div></div></div>
-</div></div></div>
+<div class="pb"><div class="h"><span>90+→ChargeOff</span><span style="color:#991b1b">71.3%</span></div><div class="tr"><div class="fl" style="width:71.3%;background:#991b1b"></div></div></div></div>
+<div class="C"><h3>Impact</h3><div class="s">10pt reduction</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+<div style="padding:5px;background:#f0fdf4;border-radius:4px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:13px;font-weight:700;color:#15803d">~113</div><div style="font-size:7px;color:#666">Fewer 60d/mo</div></div>
+<div style="padding:5px;background:#f0fdf4;border-radius:4px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:13px;font-weight:700;color:#15803d">~60</div><div style="font-size:7px;color:#666">Fewer 90+/mo</div></div>
+<div style="padding:5px;background:#f0fdf4;border-radius:4px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:13px;font-weight:700;color:#15803d">$7.2M</div><div style="font-size:7px;color:#666">Annual</div></div>
+</div></div></div></div></div>
 
-<!--TAB3-->
+<!--TAB 3: ML FORECAST-->
 <div class="X X3"><div class="R">
-<div class="K Ka"><div class="l">CURRENT</div><div class="v">22.4%</div><div class="d dp">▼ from 24.1%</div></div>
-<div class="K Ko"><div class="l">FORECAST</div><div class="v">21.5%</div><div class="d dw">Dec '26</div></div>
-<div class="K Kg"><div class="l">TARGET</div><div class="v">20.2%</div><div class="d dp">With intervention</div></div>
-<div class="K Kg"><div class="l">SAVINGS</div><div class="v">$7M+</div><div class="d dp">Annual</div></div>
-</div>
-<div class="C"><h3>15-Month Trend + Forecast</h3><div class="s">XGBoost+ARIMA | ±0.4%</div><div style="padding-bottom:18px"><div class="fc">
-<div style="height:40px;background:#2563eb"><div class="vl">21.2</div><div class="lb">Oct</div></div>
-<div style="height:56px;background:#2563eb"><div class="vl">22.0</div><div class="lb">Dec</div></div>
-<div style="height:72px;background:#2563eb"><div class="vl">22.8</div><div class="lb">Jan</div></div>
-<div style="height:78px;background:#dc2626"><div class="vl">23.1</div><div class="lb">Feb</div></div>
-<div style="height:86px;background:#dc2626"><div class="vl">23.5</div><div class="lb">Mar</div></div>
-<div style="height:92px;background:#dc2626"><div class="vl">23.8</div><div class="lb">May</div></div>
-<div style="height:98px;background:#dc2626"><div class="vl" style="font-weight:800">24.1</div><div class="lb">Jun▲</div></div>
-<div style="height:76px;background:#2563eb"><div class="vl">23.0</div><div class="lb">Aug</div></div>
-<div style="height:64px;background:#2563eb"><div class="vl">22.4</div><div class="lb">Sep</div></div>
-<div style="width:2px;background:#94a3b8;height:140px;opacity:.3;flex:none"></div>
-<div style="height:58px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vl" style="color:#666">22.1</div><div class="lb">Oct*</div></div>
-<div style="height:52px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vl" style="color:#666">21.8</div><div class="lb">Nov*</div></div>
-<div style="height:46px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vl" style="color:#666">21.5</div><div class="lb">Dec*</div></div>
-</div></div></div>
-<div class="G"><div class="C"><h3>Model</h3><div class="s">Performance</div>
-<div class="pb"><div class="h"><span>R²</span><span style="color:#15803d">91.2%</span></div><div class="tr"><div class="fl" style="width:91.2%;background:#22c55e"></div></div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">CURRENT</div><div class="v">22.4%</div><div class="d dp">▼ from 24.1%</div></div>
+<div class="K" style="border-top-color:#FF9900"><div class="l">FORECAST</div><div class="v">21.5%</div><div class="d dw">Dec '26</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">TARGET</div><div class="v">20.2%</div><div class="d dp">Intervention</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">SAVINGS</div><div class="v">$7M+</div><div class="d dp">Annual</div></div>
+</div><div class="C"><h3>Trend + Forecast</h3><div class="s">XGBoost+ARIMA</div><div style="padding-bottom:16px"><div class="fc">
+<div style="height:32px;background:#2563eb"><div class="vv">21.2</div><div class="lb">Oct</div></div><div style="height:48px;background:#2563eb"><div class="vv">22.0</div><div class="lb">Dec</div></div><div style="height:64px;background:#2563eb"><div class="vv">22.8</div><div class="lb">Jan</div></div><div style="height:78px;background:#dc2626"><div class="vv">23.5</div><div class="lb">Mar</div></div><div style="height:90px;background:#dc2626"><div class="vv">24.1</div><div class="lb">Jun</div></div><div style="height:68px;background:#2563eb"><div class="vv">23.0</div><div class="lb">Aug</div></div><div style="height:56px;background:#2563eb"><div class="vv">22.4</div><div class="lb">Sep</div></div><div style="width:2px;background:#94a3b8;height:110px;opacity:.3;flex:none"></div><div style="height:50px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vv" style="color:#666">22.1</div><div class="lb">Oct*</div></div><div style="height:44px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vv" style="color:#666">21.8</div><div class="lb">Nov*</div></div><div style="height:38px;background:rgba(148,163,184,.15);border:2px dashed #94a3b8"><div class="vv" style="color:#666">21.5</div><div class="lb">Dec*</div></div>
+</div></div></div><div class="G"><div class="C"><h3>Model</h3><div class="s">R²=91.2%</div>
+<div class="pb"><div class="h"><span>Accuracy</span><span style="color:#15803d">91.2%</span></div><div class="tr"><div class="fl" style="width:91.2%;background:#22c55e"></div></div></div>
 <div class="pb"><div class="h"><span>Precision</span><span style="color:#15803d">88.7%</span></div><div class="tr"><div class="fl" style="width:88.7%;background:#22c55e"></div></div></div>
 <div class="pb"><div class="h"><span>Recall</span><span style="color:#15803d">84.3%</span></div><div class="tr"><div class="fl" style="width:84.3%;background:#22c55e"></div></div></div>
-</div><div class="C"><h3>Top Features</h3><div class="s">Predictors</div>
+</div><div class="C"><h3>Features</h3><div class="s">Predictors</div>
 <div class="pb"><div class="h"><span>Payment history</span><span>34.2%</span></div><div class="tr"><div class="fl" style="width:34.2%;background:#2563eb"></div></div></div>
 <div class="pb"><div class="h"><span>Days since pay</span><span>22.8%</span></div><div class="tr"><div class="fl" style="width:22.8%;background:#2563eb"></div></div></div>
 <div class="pb"><div class="h"><span>Loan-to-value</span><span>16.5%</span></div><div class="tr"><div class="fl" style="width:16.5%;background:#2563eb"></div></div></div>
-<div class="pb"><div class="h"><span>Employment</span><span>12.1%</span></div><div class="tr"><div class="fl" style="width:12.1%;background:#2563eb"></div></div></div>
-</div></div>
-<div class="ins ig"><strong>📈</strong> Target <strong>20.2%</strong>. Q1 '27: $14.8M vs $18.2M = <strong>$3.4M saved.</strong></div></div>
-
-<!--TAB4-->
-<div class="X X4"><div class="R R5">
-<div class="K Kr"><div class="l">CRITICAL</div><div class="v">5</div><div class="d dn">&gt;25%</div></div>
-<div class="K Ko"><div class="l">WARNING</div><div class="v">11</div><div class="d dw">20-25%</div></div>
-<div class="K Kg"><div class="l">OK</div><div class="v">4</div><div class="d dp">&lt;20%</div></div>
-<div class="K Ka"><div class="l">AVG LOAN</div><div class="v">$85,672</div><div class="d du">42-mo</div></div>
-<div class="K Kt"><div class="l">CHARGE-OFF</div><div class="v">4.2%</div><div class="d du">12.8% rec</div></div>
-</div><div class="C"><h3>All 20 Locations</h3><div class="s">Real-time</div><div class="ts"><table>
-<tr><th>Location</th><th>ST</th><th>Loans</th><th>Def%</th><th>QoQ</th><th>Coll%</th><th>Status</th></tr>
-<tr><td class="ln">Clarksville</td><td>AR</td><td>404</td><td style="font-weight:700">31.9%</td><td>+4.9</td><td>79.1%</td><td><span class="bd bc">CRITICAL</span></td></tr>
-<tr><td class="ln">Hot Springs</td><td>AR</td><td>410</td><td style="font-weight:700">29.9%</td><td>+4.9</td><td>81.0%</td><td><span class="bd bc">CRITICAL</span></td></tr>
-<tr><td class="ln">Rogers</td><td>AR</td><td>625</td><td style="font-weight:700">28.5%</td><td>+0.5</td><td>72.9%</td><td><span class="bd bc">CRITICAL</span></td></tr>
-<tr><td class="ln">Springfield</td><td>MO</td><td>450</td><td style="font-weight:700">27.2%</td><td>+3.5</td><td>78.5%</td><td><span class="bd bc">CRITICAL</span></td></tr>
-<tr><td class="ln">Tulsa</td><td>OK</td><td>368</td><td style="font-weight:700">27.1%</td><td>+3.7</td><td>81.2%</td><td><span class="bd bc">CRITICAL</span></td></tr>
-<tr><td class="ln">Fayetteville</td><td>AR</td><td>285</td><td>25.4%</td><td>-0.6</td><td>81.0%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Russellville</td><td>AR</td><td>463</td><td>24.9%</td><td>+1.0</td><td>82.8%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Batesville</td><td>AR</td><td>366</td><td>24.7%</td><td>-3.8</td><td>77.6%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Jonesboro</td><td>AR</td><td>567</td><td>23.7%</td><td>+0.1</td><td>72.3%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Searcy</td><td>AR</td><td>292</td><td>23.0%</td><td>+0.3</td><td>85.9%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Muskogee</td><td>OK</td><td>397</td><td>22.1%</td><td>+1.6</td><td>86.2%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Memphis</td><td>TN</td><td>589</td><td>21.8%</td><td>-2.2</td><td>77.9%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Conway</td><td>AR</td><td>215</td><td>21.3%</td><td>-0.7</td><td>89.6%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Little Rock</td><td>AR</td><td>488</td><td>20.1%</td><td>-2.5</td><td>75.6%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Harrison</td><td>AR</td><td>497</td><td>20.0%</td><td>-1.8</td><td>90.9%</td><td><span class="bd bw">WARNING</span></td></tr>
-<tr><td class="ln">Joplin</td><td>MO</td><td>531</td><td>19.8%</td><td>+1.7</td><td>90.2%</td><td><span class="bd bo">OK</span></td></tr>
-<tr><td class="ln">OKC</td><td>OK</td><td>607</td><td>19.7%</td><td>-1.8</td><td>77.2%</td><td><span class="bd bo">OK</span></td></tr>
-<tr><td class="ln">Fort Smith</td><td>AR</td><td>415</td><td>19.6%</td><td>-0.7</td><td>72.9%</td><td><span class="bd bo">OK</span></td></tr>
-<tr><td class="ln">Pine Bluff</td><td>AR</td><td>472</td><td>19.1%</td><td>-0.7</td><td>81.4%</td><td><span class="bd bo">OK</span></td></tr>
-<tr><td class="ln">Texarkana</td><td>TX</td><td>308</td><td>17.1%</td><td>-2.6</td><td>86.1%</td><td><span class="bd bo">OK</span></td></tr>
-</table></div></div>
-<div class="ins ig"><strong>✅</strong> Texarkana (-2.6pts) improved via collector reassignment. <strong>Replicate.</strong></div></div>
-
-
-<!--TAB5: ALERTS-->
-<div class="X X5"><div class="R">
-<div class="K Kr"><div class="l">CRITICAL</div><div class="v">2</div><div class="d dn">Immediate</div></div>
-<div class="K Ko"><div class="l">WARNING</div><div class="v">2</div><div class="d dw">Monitor</div></div>
-<div class="K Ka"><div class="l">INFO</div><div class="v">2</div><div class="d du">Positive</div></div>
-<div class="K Kg"><div class="l">RESOLVED</div><div class="v">5</div><div class="d dp">Last 30d</div></div>
-</div>
-<div class="al ac"><div class="ic cr">🚨</div><div style="flex:1"><h4>CRITICAL: Clarksville — Default Spike</h4><div class="desc">Default hit <strong>31.9%</strong> (+4.9pts QoQ). 43 new 30-day roll-ins; 28 were current last month.</div><div class="meta"><span class="tag">P1</span><span class="tag">Default Rate</span><span class="tag">Threshold: 25%</span></div><div class="act">Review Underwriting</div></div></div>
-<div class="al ac"><div class="ic cr">🚨</div><div style="flex:1"><h4>CRITICAL: Hot Springs — 90+ DPD Surge</h4><div class="desc"><strong>22 accounts</strong> at 90+ DPD (+57% QoQ). Charge-off exposure: <strong>$412K</strong>.</div><div class="meta"><span class="tag">P1</span><span class="tag">90+ DPD</span></div><div class="act">Deploy Resources</div></div></div>
-<div class="al aw"><div class="ic wr">⚠</div><div style="flex:1"><h4>WARNING: Rogers — Approaching Critical</h4><div class="desc">Default at <strong>28.5%</strong>. ML predicts breach within 45 days.</div><div class="meta"><span class="tag">P2</span><span class="tag">ML Predicted</span></div><div class="act">Pre-emptive Outreach</div></div></div>
-<div class="al aw"><div class="ic wr">⚠</div><div style="flex:1"><h4>WARNING: Russellville — Roll Rate Spike</h4><div class="desc">30→60 roll at <strong>44.6%</strong> (+6.1pts). 74 loans in 30-day bucket.</div><div class="meta"><span class="tag">P2</span><span class="tag">Roll Rate</span></div><div class="act">Review Scripts</div></div></div>
-<div class="al ai"><div class="ic ir">ℹ</div><div style="flex:1"><h4>INFO: Texarkana — Improvement</h4><div class="desc">Default dropped to <strong>17.1%</strong> (-2.6pts). Collection rate: 86.1%.</div><div class="meta"><span class="tag">Positive</span></div><div class="act">Replicate</div></div></div>
-<div class="al ai"><div class="ic ir">ℹ</div><div style="flex:1"><h4>INFO: Portfolio — 30-Day DPD Down</h4><div class="desc">WoW: <strong>-4.2%</strong> (1,175→1,127). Collection rate +0.8pts.</div><div class="meta"><span class="tag">Positive</span></div></div></div>
-</div>
-
-<!--TAB6: AI AGENT-->
-<div class="X X6"><div class="R">
-<div class="K Ko"><div class="l">QUICKSIGHT Q</div><div class="v">AI Agent</div><div class="d dw">Natural language</div></div>
-<div class="K Ka"><div class="l">RESPONSE</div><div class="v">&lt;2s</div><div class="d du">Instant</div></div>
-<div class="K Kg"><div class="l">ACCESS</div><div class="v">Mobile</div><div class="d dp">All devices</div></div>
-<div class="K Kp"><div class="l">SECURITY</div><div class="v">RLS</div><div class="d du">Row-level</div></div>
-</div>
-<div class="C"><h3>AI Agent Demo</h3><div class="s">QuickSight Q</div><div class="ch">
-<div class="u">Which locations have default rates above 25%?</div>
-<div class="a"><div class="lbl">QuickSight Q</div><strong>5 locations</strong> exceed 25%:<table><tr><th>Location</th><th>Default</th><th>QoQ</th></tr><tr><td>Clarksville</td><td style="color:#dc2626;font-weight:700">31.9%</td><td>+4.9</td></tr><tr><td>Hot Springs</td><td style="color:#dc2626;font-weight:700">29.9%</td><td>+4.9</td></tr><tr><td>Rogers</td><td style="color:#dc2626;font-weight:700">28.5%</td><td>+0.5</td></tr><tr><td>Springfield</td><td style="color:#d97706;font-weight:700">27.2%</td><td>+3.5</td></tr><tr><td>Tulsa</td><td style="color:#d97706;font-weight:700">27.1%</td><td>+3.7</td></tr></table><div class="chips"><span class="chip">Show 30-day accounts</span><span class="chip">Compare YoY</span></div></div>
-<div class="u">What's the projected Q1 2027 charge-off?</div>
-<div class="a"><div class="lbl">QuickSight Q</div><table><tr><th>Scenario</th><th>Projected</th><th>Savings</th></tr><tr><td>Without intervention</td><td style="color:#dc2626;font-weight:700">$18.2M</td><td>—</td></tr><tr><td>With intervention</td><td style="color:#15803d;font-weight:700">$14.8M</td><td>$3.4M</td></tr></table>Target: 23.0%→20.2% = <strong>$7.2M/yr</strong>.<div class="chips"><span class="chip">By location</span><span class="chip">Add collectors?</span></div></div>
-<div class="u">What interventions help Clarksville most?</div>
-<div class="a"><div class="lbl">QuickSight Q</div><table><tr><th>Intervention</th><th>Recovery</th></tr><tr><td>SMS reminders (30d)</td><td style="color:#15803d;font-weight:700">+$420K</td></tr><tr><td>Payment restructuring</td><td style="color:#15803d;font-weight:700">+$280K</td></tr><tr><td>Dedicated collector</td><td style="color:#15803d;font-weight:700">+$190K</td></tr></table>Total: <strong>$890K/yr</strong> for Clarksville alone.<div class="chips"><span class="chip">Apply to all critical</span><span class="chip">Cost vs benefit</span></div></div>
 </div></div></div>
 
-<!--TAB7: ROI-->
+<!--TAB 4: LOCATIONS-->
+<div class="X X4"><div class="R">
+<div class="K" style="border-top-color:#dc2626"><div class="l">CRITICAL</div><div class="v">5</div><div class="d dn">&gt;25%</div></div>
+<div class="K" style="border-top-color:#FF9900"><div class="l">WARNING</div><div class="v">11</div><div class="d dw">20-25%</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">OK</div><div class="v">4</div><div class="d dp">&lt;20%</div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">AVG LOAN</div><div class="v">$85,672</div><div class="d du">42-mo</div></div>
+</div><div class="C"><h3>All 20 Locations</h3><div class="s">Real-time</div><div class="ts"><table>
+<tr><th>Location</th><th>ST</th><th>Def%</th><th>QoQ</th><th>Status</th></tr>
+<tr><td class="ln">Clarksville</td><td>AR</td><td style="font-weight:700">31.9%</td><td>+4.9</td><td><span class="bd bc">CRIT</span></td></tr>
+<tr><td class="ln">Hot Springs</td><td>AR</td><td style="font-weight:700">29.9%</td><td>+4.9</td><td><span class="bd bc">CRIT</span></td></tr>
+<tr><td class="ln">Rogers</td><td>AR</td><td style="font-weight:700">28.5%</td><td>+0.5</td><td><span class="bd bc">CRIT</span></td></tr>
+<tr><td class="ln">Springfield</td><td>MO</td><td style="font-weight:700">27.2%</td><td>+3.5</td><td><span class="bd bc">CRIT</span></td></tr>
+<tr><td class="ln">Tulsa</td><td>OK</td><td style="font-weight:700">27.1%</td><td>+3.7</td><td><span class="bd bc">CRIT</span></td></tr>
+<tr><td class="ln">Fayetteville</td><td>AR</td><td>25.4%</td><td>-0.6</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Russellville</td><td>AR</td><td>24.9%</td><td>+1.0</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Batesville</td><td>AR</td><td>24.7%</td><td>-3.8</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Jonesboro</td><td>AR</td><td>23.7%</td><td>+0.1</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Searcy</td><td>AR</td><td>23.0%</td><td>+0.3</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Muskogee</td><td>OK</td><td>22.1%</td><td>+1.6</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Memphis</td><td>TN</td><td>21.8%</td><td>-2.2</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Conway</td><td>AR</td><td>21.3%</td><td>-0.7</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Little Rock</td><td>AR</td><td>20.1%</td><td>-2.5</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Harrison</td><td>AR</td><td>20.0%</td><td>-1.8</td><td><span class="bd bw">WARN</span></td></tr>
+<tr><td class="ln">Joplin</td><td>MO</td><td>19.8%</td><td>+1.7</td><td><span class="bd bo">OK</span></td></tr>
+<tr><td class="ln">OKC</td><td>OK</td><td>19.7%</td><td>-1.8</td><td><span class="bd bo">OK</span></td></tr>
+<tr><td class="ln">Fort Smith</td><td>AR</td><td>19.6%</td><td>-0.7</td><td><span class="bd bo">OK</span></td></tr>
+<tr><td class="ln">Pine Bluff</td><td>AR</td><td>19.1%</td><td>-0.7</td><td><span class="bd bo">OK</span></td></tr>
+<tr><td class="ln">Texarkana</td><td>TX</td><td>17.1%</td><td>-2.6</td><td><span class="bd bo">OK</span></td></tr>
+</table></div></div></div>
+
+<!--TAB 5: ALERTS-->
+<div class="X X5"><div class="R">
+<div class="K" style="border-top-color:#dc2626"><div class="l">CRITICAL</div><div class="v">2</div><div class="d dn">Now</div></div>
+<div class="K" style="border-top-color:#FF9900"><div class="l">WARNING</div><div class="v">2</div><div class="d dw">Monitor</div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">INFO</div><div class="v">2</div><div class="d du">Positive</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">RESOLVED</div><div class="v">5</div><div class="d dp">30d</div></div>
+</div>
+<div class="al ac"><div style="flex:1"><h4>🚨 Clarksville — 31.9% Default</h4><div class="ds">+4.9pts QoQ. 43 new 30d roll-ins. Exceeds 2σ.</div><span class="tg">P1</span><span class="tg">Default</span><br><span class="at">Review</span></div></div>
+<div class="al ac"><div style="flex:1"><h4>🚨 Hot Springs — 90+ DPD Surge</h4><div class="ds">22 accounts 90+ DPD (+57% QoQ). Exposure: $412K.</div><span class="tg">P1</span><span class="tg">90+ DPD</span><br><span class="at">Deploy</span></div></div>
+<div class="al aw"><div style="flex:1"><h4>⚠ Rogers — Approaching Critical</h4><div class="ds">28.5%. ML predicts breach in 45d.</div><span class="tg">P2</span><span class="tg">ML</span><br><span class="at">Outreach</span></div></div>
+<div class="al aw"><div style="flex:1"><h4>⚠ Russellville — Roll Rate Spike</h4><div class="ds">30→60 at 44.6% (+6.1pts). 74 loans at risk.</div><span class="tg">P2</span><span class="tg">Roll</span><br><span class="at">Review</span></div></div>
+<div class="al ai"><div style="flex:1"><h4>ℹ Texarkana — Improved to 17.1%</h4><div class="ds">-2.6pts QoQ. Collection rate: 86.1%.</div><span class="tg">Positive</span><br><span class="at">Replicate</span></div></div>
+<div class="al ai"><div style="flex:1"><h4>ℹ Portfolio — 30d DPD Down</h4><div class="ds">WoW: -4.2%. Collection rate +0.8pts.</div><span class="tg">Positive</span></div></div></div>
+
+<!--TAB 6: AI AGENT-->
+<div class="X X6"><div class="R">
+<div class="K" style="border-top-color:#FF9900"><div class="l">QUICKSIGHT Q</div><div class="v">AI Agent</div><div class="d dw">NL queries</div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">RESPONSE</div><div class="v">&lt;2s</div><div class="d du">Instant</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">ACCESS</div><div class="v">Mobile</div><div class="d dp">All devices</div></div>
+<div class="K" style="border-top-color:#7c3aed"><div class="l">SECURITY</div><div class="v">RLS</div><div class="d du">Row-level</div></div>
+</div><div class="C"><h3>AI Agent Demo</h3><div class="s">QuickSight Q</div><div class="ch">
+<div class="u">Which locations above 25%?</div>
+<div class="a"><div class="lb">QuickSight Q</div><strong>5 locations:</strong> Clarksville 31.9%, Hot Springs 29.9%, Rogers 28.5%, Springfield 27.2%, Tulsa 27.1%<br><span class="chip">30d accounts</span><span class="chip">YoY</span></div>
+<div class="u">Q1 2027 charge-off projection?</div>
+<div class="a"><div class="lb">QuickSight Q</div>Without: <strong style="color:#dc2626">$18.2M</strong> | With: <strong style="color:#15803d">$14.8M</strong> | Savings: <strong>$3.4M</strong><br><span class="chip">By location</span><span class="chip">Add collectors?</span></div>
+<div class="u">Best interventions for Clarksville?</div>
+<div class="a"><div class="lb">QuickSight Q</div>SMS reminders: <strong style="color:#15803d">+$420K</strong> | Payment restructure: <strong style="color:#15803d">+$280K</strong> | Dedicated collector: <strong style="color:#15803d">+$190K</strong><br>Total: <strong>$890K/yr</strong><br><span class="chip">Apply to all</span><span class="chip">Cost vs benefit</span></div>
+</div></div></div>
+
+<!--TAB 7: ROI-->
 <div class="X X7">
 <div class="roi"><h3>Combined Annual Impact</h3><div class="s">Conservative estimates</div>
 <div class="rg"><div class="ri"><div class="rv">$20-45M</div><div class="rl">Total Annual Value</div></div><div class="ri"><div class="rv">$7M+</div><div class="rl">Avoided Charge-Offs</div></div><div class="ri"><div class="rv">$15-25M</div><div class="rl">Working Capital</div></div></div>
-<div class="rg" style="margin-top:6px"><div class="ri"><div class="rv">$1-3M</div><div class="rl">Per Location Saved</div></div><div class="ri"><div class="rv">20-30%</div><div class="rl">Collections Efficiency</div></div><div class="ri"><div class="rv">186</div><div class="rl">Charge-Offs Prevented</div></div></div></div>
+<div class="rg" style="margin-top:4px"><div class="ri"><div class="rv">$1-3M</div><div class="rl">Per Location Saved</div></div><div class="ri"><div class="rv">20-30%</div><div class="rl">Collections Efficiency</div></div><div class="ri"><div class="rv">186</div><div class="rl">Charge-Offs Prevented</div></div></div></div>
 <div class="G">
 <div class="C"><h3>Q1 2027 Projection</h3><div class="s">With vs without</div>
-<div style="display:flex;gap:8px;margin-bottom:8px">
-<div style="flex:1;padding:12px;background:#fef2f2;border-radius:6px;text-align:center;border:1px solid #fecaca"><div style="font-size:9px;color:#dc2626;font-weight:600">WITHOUT</div><div style="font-size:22px;font-weight:700;font-family:monospace;color:#dc2626">$18.2M</div></div>
-<div style="flex:1;padding:12px;background:#f0fdf4;border-radius:6px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:9px;color:#15803d;font-weight:600">WITH</div><div style="font-size:22px;font-weight:700;font-family:monospace;color:#15803d">$14.8M</div></div>
+<div style="display:flex;gap:6px;margin-bottom:6px">
+<div style="flex:1;padding:10px;background:#fef2f2;border-radius:5px;text-align:center;border:1px solid #fecaca"><div style="font-size:8px;color:#dc2626;font-weight:600">WITHOUT</div><div style="font-size:20px;font-weight:700;font-family:monospace;color:#dc2626">$18.2M</div></div>
+<div style="flex:1;padding:10px;background:#f0fdf4;border-radius:5px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:8px;color:#15803d;font-weight:600">WITH</div><div style="font-size:20px;font-weight:700;font-family:monospace;color:#15803d">$14.8M</div></div>
 </div>
-<div style="text-align:center;padding:8px;background:#fffbeb;border-radius:6px;border:1px solid #fde68a"><div style="font-size:9px;color:#d97706;font-weight:600">Q1 SAVINGS</div><div style="font-size:22px;font-weight:700;font-family:monospace;color:#FF9900">$3.4M</div></div></div>
+<div style="text-align:center;padding:6px;background:#fffbeb;border-radius:5px;border:1px solid #fde68a"><div style="font-size:8px;color:#d97706;font-weight:600">Q1 SAVINGS</div><div style="font-size:20px;font-weight:700;font-family:monospace;color:#FF9900">$3.4M</div></div></div>
 <div class="C"><h3>Intervention ROI</h3><div class="s">Annual recovery</div>
-<div class="pb"><div class="h"><span>Early intervention (30d)</span><span style="color:#15803d">$3.1M</span></div><div class="tr"><div class="fl" style="width:43%;background:#22c55e"></div></div></div>
+<div class="pb"><div class="h"><span>Early intervention</span><span style="color:#15803d">$3.1M</span></div><div class="tr"><div class="fl" style="width:43%;background:#22c55e"></div></div></div>
 <div class="pb"><div class="h"><span>SMS/call automation</span><span style="color:#15803d">$2.4M</span></div><div class="tr"><div class="fl" style="width:33%;background:#22c55e"></div></div></div>
 <div class="pb"><div class="h"><span>Payment optimization</span><span style="color:#15803d">$1.7M</span></div><div class="tr"><div class="fl" style="width:24%;background:#22c55e"></div></div></div>
-<div style="margin-top:8px;padding:7px;background:#f0fdf4;border-radius:5px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:9px;color:#15803d;font-weight:600">TOTAL ANNUAL</div><div style="font-size:20px;font-weight:700;font-family:monospace;color:#15803d">$7.2M</div></div></div></div>
-<div class="C"><h3>Clarksville ROI</h3><div class="s">Highest-impact location</div><div class="ts" style="max-height:130px"><table>
+<div style="margin-top:6px;padding:5px;background:#f0fdf4;border-radius:4px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:8px;color:#15803d;font-weight:600">TOTAL ANNUAL</div><div style="font-size:16px;font-weight:700;font-family:monospace;color:#15803d">$7.2M</div></div></div></div>
+<div class="C"><h3>Location ROI</h3><div class="s">Top interventions</div><table>
 <tr><th>Intervention</th><th>Recovery</th><th>Cost</th><th>ROI</th></tr>
 <tr><td class="ln">SMS reminders</td><td style="color:#15803d;font-weight:700">+$420K</td><td>$12K</td><td style="color:#15803d">35x</td></tr>
-<tr><td class="ln">Payment restructuring</td><td style="color:#15803d;font-weight:700">+$280K</td><td>$8K</td><td style="color:#15803d">35x</td></tr>
+<tr><td class="ln">Payment restructure</td><td style="color:#15803d;font-weight:700">+$280K</td><td>$8K</td><td style="color:#15803d">35x</td></tr>
 <tr><td class="ln">Dedicated collector</td><td style="color:#15803d;font-weight:700">+$190K</td><td>$55K</td><td style="color:#15803d">3.5x</td></tr>
-</table></div></div>
+</table></div>
 <div class="ins ig"><strong>💰</strong> 1% default reduction = <strong>~$7M+ avoided/yr</strong>. Pays for itself month 1.</div></div>
 
-<!--TAB8: ROADMAP-->
+<!--TAB 8: ROADMAP-->
 <div class="X X8"><div class="R">
-<div class="K Ko"><div class="l">TIMELINE</div><div class="v">12 Wks</div><div class="d dw">4 phases</div></div>
-<div class="K Ka"><div class="l">PHASE 1</div><div class="v">Week 8</div><div class="d du">First dashboard</div></div>
-<div class="K Kg"><div class="l">FULL DEPLOY</div><div class="v">Week 12</div><div class="d dp">AI+Automation</div></div>
-<div class="K Kp"><div class="l">PILOT</div><div class="v">5 Locs</div><div class="d du">Then 20</div></div>
-</div>
-<div class="G">
-<div class="C"><h3>Implementation Roadmap</h3><div class="s">Phased rollout</div>
-<div class="tl">
-<div class="i"><div class="dot dg"></div><h4>Phase 1: Data Integration & SPICE</h4><div class="tp">Connect loan mgmt, collections, payment history. Auto-refresh 15 min.</div><div class="tt" style="background:#dcfce7;color:#15803d">Weeks 1-4 • Foundation</div></div>
-<div class="i"><div class="dot do"></div><h4>Phase 2: Dashboard & ML Training</h4><div class="tp">Interactive dashboards + XGBoost/ARIMA on 36mo data. Anomaly detection.</div><div class="tt" style="background:#fef3c7;color:#d97706">Weeks 5-8 • Core Analytics</div></div>
-<div class="i"><div class="dot dd"></div><h4>Phase 3: AI Agent & Automation</h4><div class="tp">QuickSight Q NL interface. Row-level security. Threshold alerts + push.</div><div class="tt" style="background:#dbeafe;color:#2563eb">Weeks 9-12 • Intelligence</div></div>
-<div class="i"><div class="dot dd"></div><h4>Phase 4: Optimize & Scale</h4><div class="tp">5 pilot→all 20. Add Use Cases 2 & 3. Weekly model retraining.</div><div class="tt" style="background:#f3e8ff;color:#7c3aed">Ongoing • Enterprise</div></div>
-</div></div>
-<div>
-<div class="C"><h3>Pilot Plan</h3><div class="s">5 locations → Full</div><div class="ts" style="max-height:170px"><table>
+<div class="K" style="border-top-color:#FF9900"><div class="l">TIMELINE</div><div class="v">12 Wks</div><div class="d dw">4 phases</div></div>
+<div class="K" style="border-top-color:#2563eb"><div class="l">PHASE 1</div><div class="v">Wk 8</div><div class="d du">Dashboard</div></div>
+<div class="K" style="border-top-color:#15803d"><div class="l">FULL</div><div class="v">Wk 12</div><div class="d dp">AI+Auto</div></div>
+<div class="K" style="border-top-color:#7c3aed"><div class="l">PILOT</div><div class="v">5 Locs</div><div class="d du">Then 20</div></div>
+</div><div class="G">
+<div class="C"><h3>Roadmap</h3><div class="s">Phased</div><div class="tl">
+<div class="i"><div class="dt" style="background:#22c55e;box-shadow:0 0 0 2px #22c55e"></div><h4>Phase 1: Data & SPICE</h4><div class="tp">Connect loan mgmt, collections, payments. 15-min refresh.</div><div class="tt" style="background:#dcfce7;color:#15803d">Wk 1-4</div></div>
+<div class="i"><div class="dt" style="background:#FF9900;box-shadow:0 0 0 2px #FF9900"></div><h4>Phase 2: Dashboard & ML</h4><div class="tp">Interactive dashboards + XGBoost/ARIMA. Anomaly detection.</div><div class="tt" style="background:#fef3c7;color:#d97706">Wk 5-8</div></div>
+<div class="i"><div class="dt" style="background:#e0e0e0;box-shadow:0 0 0 2px #e0e0e0"></div><h4>Phase 3: AI Agent</h4><div class="tp">QuickSight Q NL. Row-level security. Alerts + push.</div><div class="tt" style="background:#dbeafe;color:#2563eb">Wk 9-12</div></div>
+<div class="i"><div class="dt" style="background:#e0e0e0;box-shadow:0 0 0 2px #e0e0e0"></div><h4>Phase 4: Scale</h4><div class="tp">5→20 locations. Add Use Cases 2 & 3. Weekly retraining.</div><div class="tt" style="background:#f3e8ff;color:#7c3aed">Ongoing</div></div>
+</div></div><div>
+<div class="C"><h3>Pilot Plan</h3><div class="s">5→Full</div><table>
 <tr><th>Step</th><th>Action</th><th>When</th></tr>
-<tr><td class="ln">1</td><td>Finalize data connections</td><td>Wk 1-2</td></tr>
-<tr><td class="ln">2</td><td>Configure ML models</td><td>Wk 3-5</td></tr>
-<tr><td class="ln">3</td><td>Deploy pilot (5 critical)</td><td>Wk 6-8</td></tr>
-<tr><td class="ln">4</td><td>Validate & refine</td><td>Wk 9-10</td></tr>
-<tr><td class="ln">5</td><td>Full rollout (all 20)</td><td>Wk 11-12</td></tr>
-</table></div></div>
-<div class="C"><h3>QuickSight Stack</h3><div class="s">Capabilities</div><div class="ts" style="max-height:170px"><table>
-<tr><th>Capability</th><th>Use</th></tr>
-<tr><td class="ln">SPICE Engine</td><td>Sub-second queries</td></tr>
-<tr><td class="ln">ML Insights</td><td>Anomaly + forecasting</td></tr>
+<tr><td class="ln">1</td><td>Data connections</td><td>Wk 1-2</td></tr>
+<tr><td class="ln">2</td><td>ML models</td><td>Wk 3-5</td></tr>
+<tr><td class="ln">3</td><td>Pilot (5 critical)</td><td>Wk 6-8</td></tr>
+<tr><td class="ln">4</td><td>Validate</td><td>Wk 9-10</td></tr>
+<tr><td class="ln">5</td><td>Full rollout</td><td>Wk 11-12</td></tr>
+</table></div>
+<div class="C"><h3>QuickSight Stack</h3><div class="s">Capabilities</div><table>
+<tr><th>Feature</th><th>Use</th></tr>
+<tr><td class="ln">SPICE</td><td>Sub-second queries</td></tr>
+<tr><td class="ln">ML Insights</td><td>Anomaly + forecast</td></tr>
 <tr><td class="ln">QuickSight Q</td><td>Natural language</td></tr>
-<tr><td class="ln">Row-Level Security</td><td>Role-based access</td></tr>
-<tr><td class="ln">Automated Alerts</td><td>Push notifications</td></tr>
+<tr><td class="ln">RLS</td><td>Role-based access</td></tr>
+<tr><td class="ln">Alerts</td><td>Push notifications</td></tr>
 <tr><td class="ln">Scenarios</td><td>What-if modeling</td></tr>
-<tr><td class="ln">Spaces</td><td>Collaboration hub</td></tr>
-</table></div></div>
-</div></div>
-<div class="ins"><strong>🚀 October Session:</strong> This = Phase 1 capabilities. With real data: <strong>production in 8 weeks</strong> → $7M+ savings Q1 2027.</div></div>
+</table></div></div></div>
+<div class="ins"><strong>🚀 Oct Session:</strong> This = Phase 1. Real data: <strong>production in 8 wks</strong> → $7M+ Q1 2027.</div></div>
 
-<div class="ft"><strong>Amazon QuickSight</strong> • America's Car-Mart Prototype • Confidential • Sep 2026</div>
-</div></body></html>
-
-
+<div class="ft"><strong>Amazon QuickSight</strong> • Car-Mart Prototype • Confidential • Sep 2026</div></div></body></html>
 
