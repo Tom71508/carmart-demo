@@ -1,508 +1,380 @@
+I found the issue — the HTML was cut off mid-way through Tab 3. Let me rebuild the complete dashboard with all 8 tabs fully populated with data. Due to the size, I'll split it into two parts that you'll combine into one file.
+
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Car-Mart Loan Portfolio Health Dashboard — Amazon Quick Prototype</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Car-Mart Loan Portfolio Health Dashboard — Amazon QuickSight Prototype</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f0f2f5;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#222;}
+.header{background:linear-gradient(135deg,#0f1b2d 0%,#1a2d4a 100%);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-logo{width:36px;height:36px;background:#FF9900;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.header-title{color:#fff;font-size:18px;font-weight:700;}
+.header-sub{color:rgba(255,255,255,0.6);font-size:12px;}
+.header-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.hb{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;}
+.hb-live{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);}
+.hb-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;}
+.hb-sp{background:rgba(255,153,0,0.15);color:#FF9900;border:1px solid rgba(255,153,0,0.3);}
+.hb-ml{background:rgba(139,92,246,0.15);color:#a78bfa;border:1px solid rgba(139,92,246,0.3);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.dash{max-width:1200px;margin:0 auto;padding:0 20px 60px;}
+input[name="tab"]{display:none;}
+.tabs{display:flex;gap:3px;margin:16px 0;background:#fff;border-radius:12px;padding:4px;border:1px solid #e0e0e0;box-shadow:0 1px 4px rgba(0,0,0,.04);overflow-x:auto;}
+.tabs label{flex:1;text-align:center;padding:10px 6px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:500;color:#666;transition:all .2s;user-select:none;white-space:nowrap;min-width:85px;}
+.tabs label:hover{background:#f5f5f5;}
+#t1:checked~.dash .tabs label[for=t1],#t2:checked~.dash .tabs label[for=t2],#t3:checked~.dash .tabs label[for=t3],#t4:checked~.dash .tabs label[for=t4],#t5:checked~.dash .tabs label[for=t5],#t6:checked~.dash .tabs label[for=t6],#t7:checked~.dash .tabs label[for=t7],#t8:checked~.dash .tabs label[for=t8]{background:#0f1b2d;color:#fff;box-shadow:0 2px 8px rgba(15,27,45,.25);}
+.p{display:none;}
+#t1:checked~.dash .p1,#t2:checked~.dash .p2,#t3:checked~.dash .p3,#t4:checked~.dash .p4,#t5:checked~.dash .p5,#t6:checked~.dash .p6,#t7:checked~.dash .p7,#t8:checked~.dash .p8{display:block;}
+.kr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.kr5{grid-template-columns:repeat(5,1fr);}
+.k{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid #e8e8e8;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.k:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.k::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.k.ab::after{background:#2563eb;}.k.ar::after{background:#dc2626;}.k.ag::after{background:#15803d;}.k.ao::after{background:#FF9900;}.k.ap::after{background:#7c3aed;}.k.at::after{background:#0d9488;}
+.kl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:4px;}
+.kv{font-size:24px;font-weight:700;font-family:'SF Mono','Cascadia Code',monospace;color:#0f1b2d;}
+.kd{font-size:10.5px;margin-top:2px;}
+.kd.neg{color:#dc2626;}.kd.pos{color:#15803d;}.kd.wrn{color:#d97706;}.kd.neu{color:#666;}
+.sp{display:flex;align-items:flex-end;gap:2px;margin-top:6px;height:20px;}
+.sp b{flex:1;border-radius:2px 2px 0 0;opacity:.25;}.sp b:last-child{opacity:.9;}
+.c{background:#fff;border-radius:12px;padding:18px 20px;border:1px solid #e8e8e8;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.ct{font-size:14px;font-weight:600;color:#0f1b2d;margin-bottom:2px;}
+.cs{font-size:11px;color:#888;margin-bottom:12px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.br{display:flex;align-items:center;margin-bottom:4px;}
+.bl{width:100px;font-size:11px;color:#444;text-align:right;padding-right:8px;flex-shrink:0;white-space:nowrap;}
+.bt{flex:1;height:18px;background:#f0f2f5;border-radius:4px;position:relative;}
+.bf{height:100%;border-radius:4px;position:absolute;left:0;top:0;}
+.bf.cu{background:linear-gradient(90deg,#2563eb,#3b82f6);opacity:.85;}
+.bf.pr{background:#cbd5e1;opacity:.4;height:9px;top:4.5px;border-radius:2px;}
+.bm{position:absolute;top:-2px;bottom:-2px;width:2px;background:#dc2626;z-index:2;}
+.bv{width:42px;font-size:10.5px;font-family:monospace;color:#333;padding-left:6px;flex-shrink:0;font-weight:600;}
+.sr{display:flex;align-items:center;margin-bottom:6px;}
+.sl{width:100px;font-size:11px;color:#444;text-align:right;padding-right:8px;flex-shrink:0;}
+.st{flex:1;height:24px;display:flex;border-radius:5px;overflow:hidden;}
+.ss{height:100%;}
+.sc{background:#22c55e;}.s3{background:#facc15;}.s6{background:#f97316;}.s9{background:#dc2626;}
+.sv{width:42px;font-size:10.5px;font-family:monospace;color:#333;padding-left:6px;flex-shrink:0;}
+.lg{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:4px;font-size:11px;color:#555;}
+.ld{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.hm{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:10px 0;}
+.hc{padding:8px 6px;border-radius:8px;text-align:center;color:#fff;font-weight:600;}
+.hc .hn{font-size:9px;font-weight:400;opacity:.85;margin-bottom:1px;}
+.hc .hv{font-family:monospace;font-size:14px;}
+.h1{background:linear-gradient(135deg,#dc2626,#b91c1c);}.h2{background:linear-gradient(135deg,#ea580c,#c2410c);}.h3{background:linear-gradient(135deg,#d97706,#b45309);}.h4{background:linear-gradient(135deg,#16a34a,#15803d);}.h5{background:linear-gradient(135deg,#22c55e,#16a34a);}
+.dw{display:flex;align-items:center;gap:16px;justify-content:center;padding:8px 0;}
+.dn{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.di{width:72px;height:72px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.dv{font-size:20px;font-weight:700;font-family:monospace;color:#0f1b2d;}
+.ds{font-size:9px;color:#888;}
+.dl{display:flex;flex-direction:column;gap:6px;}
+.dli{display:flex;align-items:center;gap:6px;font-size:11px;color:#444;}
+.dld{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.dlv{font-family:monospace;font-weight:600;margin-left:auto;padding-left:10px;}
+.pb{margin-bottom:12px;}
+.ph{display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;}
+.ph span:last-child{font-family:monospace;font-weight:600;}
+.pt{height:8px;background:#f0f2f5;border-radius:4px;overflow:hidden;}
+.pf{height:100%;border-radius:4px;}
+.ins{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:3px solid #FF9900;padding:10px 14px;border-radius:0 8px 8px 0;margin-top:14px;font-size:12px;color:#444;line-height:1.5;}
+.ins strong{color:#0f1b2d;}
+.ins-b{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left-color:#2563eb;}
+.ins-g{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-left-color:#15803d;}
+.ins-r{background:linear-gradient(135deg,#fef2f2,#fecaca);border-left-color:#dc2626;}
+.fc{display:flex;align-items:flex-end;gap:3px;height:180px;padding:0 0 4px;}
+.fb{flex:1;border-radius:4px 4px 0 0;position:relative;transition:all .15s;}
+.fb:hover{filter:brightness(1.1);transform:scaleY(1.03);transform-origin:bottom;}
+.fb .fl{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:8px;color:#888;white-space:nowrap;}
+.fb .fv{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:9px;font-family:monospace;color:#333;white-space:nowrap;font-weight:600;}
+.tb{width:100%;border-collapse:collapse;font-size:11px;}
+.tb th{text-align:left;color:#666;font-weight:600;padding:7px 6px;border-bottom:2px solid #ddd;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;background:#fff;z-index:1;}
+.tb td{padding:6px;color:#222;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:10.5px;}
+.tb tr:hover td{background:#f8f9fb;}
+.tb .ln{font-family:system-ui,sans-serif;font-weight:500;color:#0f1b2d;}
+.tbs{max-height:420px;overflow-y:auto;border-radius:8px;border:1px solid #eee;}
+.bd{display:inline-block;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:600;}
+.bc{background:#fef2f2;color:#dc2626;}.bw{background:#fffbeb;color:#d97706;}.bo{background:#f0fdf4;color:#15803d;}
+.al{display:flex;gap:12px;padding:12px 14px;border-radius:10px;margin-bottom:8px;border:1px solid #e8e8e8;align-items:flex-start;transition:all .15s;}
+.al:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.al.ac{background:#fef2f2;border-color:#fecaca;}.al.aw{background:#fffbeb;border-color:#fde68a;}.al.ai{background:#eff6ff;border-color:#bfdbfe;}
+.aico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;color:#fff;}
+.aico.ic{background:#dc2626;}.aico.iw{background:#d97706;}.aico.ii{background:#2563eb;}
+.abod{flex:1;}
+.atit{font-size:12px;font-weight:600;color:#0f1b2d;margin-bottom:1px;}
+.adsc{font-size:11px;color:#555;line-height:1.4;}
+.atm{font-size:9px;color:#999;margin-top:3px;}
+.ameta{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.atag{padding:2px 8px;border-radius:4px;font-size:9px;font-weight:600;background:rgba(0,0,0,.05);color:#444;}
+.aact{display:inline-block;margin-top:6px;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;background:#0f1b2d;color:#fff;cursor:pointer;}
+.chat{max-width:620px;}
+.cb{padding:10px 14px;border-radius:14px;margin-bottom:8px;font-size:12px;line-height:1.5;}
+.cbu{background:linear-gradient(135deg,#0f1b2d,#1e3a5f);color:#fff;margin-left:80px;border-bottom-right-radius:4px;}
+.cba{background:#fff;color:#222;border:1px solid #e0e0e0;margin-right:80px;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.cbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#FF9900;font-weight:700;margin-bottom:3px;}
+.cbt{width:100%;border-collapse:collapse;margin:6px 0;font-size:11px;}
+.cbt th{text-align:left;padding:3px 6px;border-bottom:1px solid #eee;color:#888;font-size:9px;text-transform:uppercase;}
+.cbt td{padding:3px 6px;border-bottom:1px solid #f5f5f5;font-family:monospace;}
+.chips{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
+.chip{display:inline-block;padding:4px 10px;border-radius:14px;font-size:10px;border:1px solid #ddd;color:#555;background:#f9f9f9;}
+.roi{background:linear-gradient(135deg,#0f1b2d,#1a2d4a);border-radius:12px;padding:20px;color:#fff;margin-bottom:14px;}
+.roi .ct{color:#fff;}.roi .cs{color:rgba(255,255,255,.5);}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;}
+.ri{background:rgba(255,255,255,.08);border-radius:8px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.1);}
+.rv{font-size:22px;font-weight:700;font-family:monospace;color:#FF9900;}
+.rl{font-size:10px;color:rgba(255,255,255,.6);margin-top:4px;}
+.tl{position:relative;padding-left:28px;}
+.tl::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:#e0e0e0;}
+.tli{position:relative;margin-bottom:18px;}
+.tld{position:absolute;left:-24px;top:2px;width:14px;height:14px;border-radius:50%;border:2px solid #fff;}
+.tld.ta{background:#FF9900;box-shadow:0 0 0 2px #FF9900;}
+.tld.td{background:#22c55e;box-shadow:0 0 0 2px #22c55e;}
+.tld.tp{background:#e0e0e0;box-shadow:0 0 0 2px #e0e0e0;}
+.tlh{font-size:13px;font-weight:600;color:#0f1b2d;}
+.tlp{font-size:11px;color:#666;margin-top:2px;line-height:1.4;}
+.tlt{display:inline-block;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:600;margin-top:3px;}
+.footer{text-align:center;padding:20px;font-size:10px;color:#aaa;border-top:1px solid #e8e8e8;margin-top:20px;}
+.footer strong{color:#FF9900;}
+.mini{padding:8px;background:#f8f9fb;border-radius:6px;}
+.mini-l{font-size:10px;color:#888;}
+.mini-v{font-size:16px;font-weight:700;font-family:monospace;color:#0f1b2d;}
+.mini-d{font-size:10px;}
+@media(prefers-reduced-motion:no-preference){.k,.c{animation:fu .4s ease-out both;}.k:nth-child(2){animation-delay:40ms;}.k:nth-child(3){animation-delay:80ms;}.k:nth-child(4){animation-delay:120ms;}@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}}
+@media(max-width:768px){.kr,.kr5{grid-template-columns:repeat(2,1fr);}.g2,.g3,.rg{grid-template-columns:1fr;}.hm{grid-template-columns:repeat(3,1fr);}.tabs{overflow-x:auto;}.tabs label{min-width:75px;font-size:10px;padding:8px 4px;}.header{padding:12px 16px;}.header-title{font-size:15px;}.bl,.sl{width:80px;font-size:10px;}.cbu{margin-left:40px;}.cba{margin-right:40px;}}
+</style>
 </head>
 <body>
 
-<h1 style="margin:0;padding:20px 24px 0;font-family:system-ui,sans-serif;color:#0f1b2d;font-size:22px;display:flex;align-items:center;gap:10px;">
-  <svg width="28" height="28" viewBox="0 0 28 28" style="flex-shrink:0;">
-    <rect width="28" height="28" rx="6" fill="#FF9900"/>
-    <path d="M7 14h14M14 7v14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-  Loan Portfolio Health &amp; Collections Intelligence
-</h1>
-<p style="margin:0;padding:4px 24px 4px;font-family:system-ui,sans-serif;color:#666;font-size:13px;">
-  America's Car-Mart — Amazon Quick Prototype &nbsp;|&nbsp; Data as of September 14, 2026
-</p>
-<p style="margin:0;padding:0 24px 16px;font-family:system-ui,sans-serif;font-size:11px;color:#999;">
-  Last refresh: Sep 14, 2026 08:15 AM CT &nbsp;&middot;&nbsp; SPICE dataset: loan_portfolio_master &nbsp;&middot;&nbsp; 20 active locations
-</p>
-
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:#f0f2f5;font-family:system-ui,-apple-system,sans-serif;}
-  .dashboard{max-width:1140px;margin:0 auto;padding:0 24px 60px;}
-  input[name="tab"]{display:none;}
-  .tab-bar{display:flex;gap:4px;margin-bottom:20px;background:#fff;border-radius:12px;padding:4px;border:1px solid #e0e0e0;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
-  .tab-bar label{flex:1;text-align:center;padding:11px 8px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;color:#555;transition:all .2s ease;user-select:none;}
-  .tab-bar label:hover{background:#f5f5f5;}
-  #tab-overview:checked ~ .dashboard .tab-bar label[for="tab-overview"],
-  #tab-aging:checked ~ .dashboard .tab-bar label[for="tab-aging"],
-  #tab-forecast:checked ~ .dashboard .tab-bar label[for="tab-forecast"],
-  #tab-detail:checked ~ .dashboard .tab-bar label[for="tab-detail"],
-  #tab-alerts:checked ~ .dashboard .tab-bar label[for="tab-alerts"],
-  #tab-agent:checked ~ .dashboard .tab-bar label[for="tab-agent"]{background:#0f1b2d;color:#fff;box-shadow:0 2px 8px rgba(15,27,45,0.2);}
-  .tab-content{display:none;}
-  #tab-overview:checked ~ .dashboard .content-overview,
-  #tab-aging:checked ~ .dashboard .content-aging,
-  #tab-forecast:checked ~ .dashboard .content-forecast,
-  #tab-detail:checked ~ .dashboard .content-detail,
-  #tab-alerts:checked ~ .dashboard .content-alerts,
-  #tab-agent:checked ~ .dashboard .content-agent{display:block;}
-  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
-  .kpi-card{background:#fff;border-radius:10px;padding:16px 18px;border:1px solid #e8e8e8;position:relative;overflow:hidden;}
-  .kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-  .kpi-card.accent-blue::after{background:#2563eb;}
-  .kpi-card.accent-red::after{background:#dc2626;}
-  .kpi-card.accent-green::after{background:#15803d;}
-  .kpi-card.accent-orange::after{background:#FF9900;}
-  .kpi-card.accent-purple::after{background:#7c3aed;}
-  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:5px;}
-  .kpi-value{font-size:26px;font-weight:700;font-family:'SF Mono','Cascadia Code',monospace;color:#0f1b2d;}
-  .kpi-delta{font-size:11px;margin-top:3px;}
-  .kpi-delta.negative{color:#dc2626;}
-  .kpi-delta.positive{color:#15803d;}
-  .kpi-delta.warning{color:#d97706;}
-  .kpi-delta.neutral{color:#666;}
-  .kpi-spark{display:flex;align-items:flex-end;gap:2px;margin-top:8px;height:24px;}
-  .kpi-spark-bar{flex:1;border-radius:2px 2px 0 0;background:#2563eb;opacity:.25;}
-  .kpi-spark-bar:last-child{opacity:.9;}
-  .card{background:#fff;border-radius:12px;padding:20px 24px;border:1px solid #e8e8e8;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,0.03);}
-  .card-title{font-size:15px;font-weight:600;color:#0f1b2d;margin-bottom:3px;}
-  .card-subtitle{font-size:12px;color:#888;margin-bottom:14px;}
-  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .bar-chart{width:100%;}
-  .bar-row{display:flex;align-items:center;margin-bottom:5px;}
-  .bar-label{width:120px;font-size:11.5px;color:#444;text-align:right;padding-right:10px;flex-shrink:0;white-space:nowrap;}
-  .bar-track{flex:1;height:20px;background:#f0f2f5;border-radius:4px;position:relative;overflow:visible;}
-  .bar-fill{height:100%;border-radius:4px;position:absolute;left:0;top:0;transition:width .3s ease;}
-  .bar-fill.current{background:linear-gradient(90deg,#2563eb,#3b82f6);opacity:.85;}
-  .bar-fill.prior{background:#cbd5e1;opacity:.45;height:10px;top:5px;border-radius:2px;}
-  .bar-val{width:48px;font-size:11px;font-family:monospace;color:#333;padding-left:8px;flex-shrink:0;font-weight:600;}
-  .bar-benchmark{position:absolute;top:-2px;bottom:-2px;width:2px;background:#dc2626;z-index:2;}
-  .stack-row{display:flex;align-items:center;margin-bottom:7px;}
-  .stack-label{width:120px;font-size:11.5px;color:#444;text-align:right;padding-right:10px;flex-shrink:0;}
-  .stack-track{flex:1;height:26px;display:flex;border-radius:5px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);}
-  .stack-seg{height:100%;transition:width .3s ease;}
-  .seg-current{background:#22c55e;}
-  .seg-30{background:#facc15;}
-  .seg-60{background:#f97316;}
-  .seg-90{background:#dc2626;}
-  .stack-val{width:48px;font-size:11px;font-family:monospace;color:#333;padding-left:8px;flex-shrink:0;}
-  .legend{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
-  .legend-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#555;}
-  .legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
-  .forecast-container{position:relative;padding-bottom:28px;}
-  .forecast-row{display:flex;align-items:flex-end;gap:4px;height:200px;padding:0 0 4px;}
-  .forecast-bar{flex:1;border-radius:4px 4px 0 0;position:relative;transition:all .15s;}
-  .forecast-bar:hover{filter:brightness(1.1);transform:scaleY(1.02);transform-origin:bottom;}
-  .forecast-bar .fb-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:#888;white-space:nowrap;}
-  .forecast-bar .fb-val{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:10px;font-family:monospace;color:#333;white-space:nowrap;font-weight:600;}
-  .detail-table{width:100%;border-collapse:collapse;font-size:12px;}
-  .detail-table th{text-align:left;color:#666;font-weight:600;padding:8px 8px;border-bottom:2px solid #ddd;font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;background:#fff;}
-  .detail-table td{padding:7px 8px;color:#222;border-bottom:1px solid #f0f0f0;font-family:monospace;font-size:11.5px;}
-  .detail-table tr:hover td{background:#f8f9fb;}
-  .detail-table .loc-name{font-family:system-ui,sans-serif;font-weight:500;color:#0f1b2d;}
-  .detail-scroll{max-height:420px;overflow-y:auto;border-radius:8px;border:1px solid #eee;}
-  .alert-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
-  .alert-critical{background:#fef2f2;color:#dc2626;}
-  .alert-warning{background:#fffbeb;color:#d97706;}
-  .alert-ok{background:#f0fdf4;color:#15803d;}
-  .insight-box{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:3px solid #FF9900;padding:12px 16px;border-radius:0 8px 8px 0;margin-top:16px;font-size:13px;color:#444;line-height:1.5;}
-  .insight-box strong{color:#0f1b2d;}
-  .heatmap{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0;}
-  .heat-cell{padding:10px 8px;border-radius:8px;text-align:center;font-size:11px;color:#fff;font-weight:600;}
-  .heat-cell .heat-loc{font-size:10px;font-weight:400;opacity:.85;margin-bottom:2px;}
-  .heat-cell .heat-val{font-family:monospace;font-size:16px;}
-  .heat-critical{background:linear-gradient(135deg,#dc2626,#b91c1c);}
-  .heat-high{background:linear-gradient(135deg,#ea580c,#c2410c);}
-  .heat-medium{background:linear-gradient(135deg,#d97706,#b45309);}
-  .heat-low{background:linear-gradient(135deg,#16a34a,#15803d);}
-  .heat-ok{background:linear-gradient(135deg,#22c55e,#16a34a);}
-  .donut-container{display:flex;align-items:center;gap:20px;justify-content:center;padding:10px 0;}
-  .donut{width:120px;height:120px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;}
-  .donut-center{font-size:22px;font-weight:700;font-family:monospace;color:#0f1b2d;}
-  .donut-label{font-size:10px;color:#888;text-align:center;margin-top:2px;}
-  .donut-legend{display:flex;flex-direction:column;gap:8px;}
-  .donut-legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#444;}
-  .donut-legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
-  .donut-legend-val{font-family:monospace;font-weight:600;margin-left:auto;padding-left:12px;}
-  .alert-card{display:flex;gap:14px;padding:14px 16px;border-radius:10px;margin-bottom:10px;border:1px solid #e8e8e8;align-items:flex-start;transition:all .15s;}
-  .alert-card:hover{box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-  .alert-card.critical{background:#fef2f2;border-color:#fecaca;}
-  .alert-card.warn{background:#fffbeb;border-color:#fde68a;}
-  .alert-card.info{background:#eff6ff;border-color:#bfdbfe;}
-  .alert-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
-  .alert-icon.crit-bg{background:#dc2626;color:#fff;}
-  .alert-icon.warn-bg{background:#d97706;color:#fff;}
-  .alert-icon.info-bg{background:#2563eb;color:#fff;}
-  .alert-body{flex:1;}
-  .alert-title-text{font-size:13px;font-weight:600;color:#0f1b2d;margin-bottom:2px;}
-  .alert-desc{font-size:12px;color:#555;line-height:1.4;}
-  .alert-time{font-size:10px;color:#999;margin-top:4px;}
-  .alert-action{display:inline-block;margin-top:6px;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;background:#0f1b2d;color:#fff;cursor:pointer;}
-  .chat-container{max-width:640px;}
-  .chat-bubble{padding:12px 16px;border-radius:14px;margin-bottom:10px;font-size:13px;line-height:1.55;}
-  .chat-user{background:linear-gradient(135deg,#0f1b2d,#1e3a5f);color:#fff;margin-left:80px;border-bottom-right-radius:4px;}
-  .chat-agent{background:#fff;color:#222;border:1px solid #e0e0e0;margin-right:80px;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
-  .chat-agent-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#FF9900;font-weight:700;margin-bottom:4px;}
-  .chat-mini-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px;}
-  .chat-mini-table th{text-align:left;padding:4px 8px;border-bottom:1px solid #eee;color:#888;font-size:10px;text-transform:uppercase;}
-  .chat-mini-table td{padding:4px 8px;border-bottom:1px solid #f5f5f5;font-family:monospace;}
-  .chat-action-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-  .chat-chip{display:inline-block;padding:5px 12px;border-radius:16px;font-size:11px;border:1px solid #ddd;color:#555;background:#f9f9f9;cursor:pointer;}
-  .proto-footer{text-align:center;padding:24px;font-size:11px;color:#aaa;border-top:1px solid #e8e8e8;margin-top:20px;}
-  .proto-footer strong{color:#FF9900;}
-  @media(prefers-reduced-motion:no-preference){
-    .kpi-card{animation:fadeUp .4s ease-out both;}
-    .kpi-card:nth-child(2){animation-delay:40ms;}
-    .kpi-card:nth-child(3){animation-delay:80ms;}
-    .kpi-card:nth-child(4){animation-delay:120ms;}
-    .card{animation:fadeUp .4s ease-out both;animation-delay:160ms;}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-  }
-  @media(max-width:768px){
-    .kpi-row{grid-template-columns:repeat(2,1fr);}
-    .card-grid{grid-template-columns:1fr;}
-    .heatmap{grid-template-columns:repeat(3,1fr);}
-    .tab-bar{flex-wrap:wrap;}
-    .tab-bar label{font-size:11px;padding:8px 4px;}
-  }
-</style>
-
-<input type="radio" name="tab" id="tab-overview" checked>
-<input type="radio" name="tab" id="tab-aging">
-<input type="radio" name="tab" id="tab-forecast">
-<input type="radio" name="tab" id="tab-detail">
-<input type="radio" name="tab" id="tab-alerts">
-<input type="radio" name="tab" id="tab-agent">
-
-<div class="dashboard">
-  <div class="tab-bar">
-    <label for="tab-overview">&#x1F4CA; Overview</label>
-    <label for="tab-aging">&#x1F4CB; Aging</label>
-    <label for="tab-forecast">&#x1F916; ML Forecast</label>
-    <label for="tab-detail">&#x1F50D; Detail</label>
-    <label for="tab-alerts">&#x1F514; Alerts</label>
-    <label for="tab-agent">&#x1F4AC; AI Agent</label>
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo"><svg viewBox="0 0 20 20" fill="none" width="20" height="20"><path d="M4 10h12M10 4v12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div><div class="header-title">Loan Portfolio Health &amp; Collections Intelligence</div><div class="header-sub">America's Car-Mart &bull; Amazon QuickSight Prototype &bull; Sep 14, 2026</div></div>
   </div>
-
-  <!-- TAB 1: OVERVIEW -->
-  <div class="tab-content content-overview">
-    <div class="kpi-row">
-      <div class="kpi-card accent-orange">
-        <div class="kpi-label">Portfolio Value</div>
-        <div class="kpi-value">$730M+</div>
-        <div class="kpi-delta warning">Annual collections volume</div>
-        <div class="kpi-spark">
-          <div class="kpi-spark-bar" style="height:40%;"></div><div class="kpi-spark-bar" style="height:55%;"></div><div class="kpi-spark-bar" style="height:50%;"></div><div class="kpi-spark-bar" style="height:65%;"></div><div class="kpi-spark-bar" style="height:60%;"></div><div class="kpi-spark-bar" style="height:70%;"></div><div class="kpi-spark-bar" style="height:58%;"></div><div class="kpi-spark-bar" style="height:75%;"></div>
-        </div>
-      </div>
-      <div class="kpi-card accent-red">
-        <div class="kpi-label">Default Rate</div>
-        <div class="kpi-value">23.0%</div>
-        <div class="kpi-delta negative">&#x25B2; 1.2% vs prior year</div>
-        <div class="kpi-spark">
-          <div class="kpi-spark-bar" style="height:35%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:40%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:50%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:65%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:70%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:80%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:75%;background:#dc2626;"></div><div class="kpi-spark-bar" style="height:60%;background:#dc2626;"></div>
-        </div>
-      </div>
-      <div class="kpi-card accent-blue">
-        <div class="kpi-label">Active Loans</div>
-        <div class="kpi-value">8,524</div>
-        <div class="kpi-delta negative">&#x25BC; 14.3% vs prior year</div>
-        <div class="kpi-spark">
-          <div class="kpi-spark-bar" style="height:90%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:85%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:78%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:70%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:65%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:58%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:55%;background:#2563eb;"></div><div class="kpi-spark-bar" style="height:50%;background:#2563eb;"></div>
-        </div>
-      </div>
-      <div class="kpi-card accent-green">
-        <div class="kpi-label">Avg Collection Rate</div>
-        <div class="kpi-value">81.2%</div>
-        <div class="kpi-delta positive">&#x25B2; 0.8% vs prior quarter</div>
-        <div class="kpi-spark">
-          <div class="kpi-spark-bar" style="height:55%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:58%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:60%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:62%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:65%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:68%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:72%;background:#15803d;"></div><div class="kpi-spark-bar" style="height:78%;background:#15803d;"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Default Rate by Location</div>
-        <div class="card-subtitle">Current Qtr vs. Prior Qtr &mdash; Red line = 23% benchmark</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#2563eb;"></div> Current</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#cbd5e1;"></div> Prior</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div> 23%</div>
-        </div>
-        <div class="bar-chart">
-          <div class="bar-row"><div class="bar-label">Clarksville</div><div class="bar-track"><div class="bar-fill current" style="width:79.8%;"></div><div class="bar-fill prior" style="width:67.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#dc2626;">31.9</div></div>
-          <div class="bar-row"><div class="bar-label">Hot Springs</div><div class="bar-track"><div class="bar-fill current" style="width:74.8%;"></div><div class="bar-fill prior" style="width:62.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#dc2626;">29.9</div></div>
-          <div class="bar-row"><div class="bar-label">Rogers</div><div class="bar-track"><div class="bar-fill current" style="width:71.3%;"></div><div class="bar-fill prior" style="width:70%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#dc2626;">28.5</div></div>
-          <div class="bar-row"><div class="bar-label">Springfield</div><div class="bar-track"><div class="bar-fill current" style="width:68%;"></div><div class="bar-fill prior" style="width:59.3%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#d97706;">27.2</div></div>
-          <div class="bar-row"><div class="bar-label">Tulsa</div><div class="bar-track"><div class="bar-fill current" style="width:67.8%;"></div><div class="bar-fill prior" style="width:58.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#d97706;">27.1</div></div>
-          <div class="bar-row"><div class="bar-label">Fayetteville</div><div class="bar-track"><div class="bar-fill current" style="width:63.5%;"></div><div class="bar-fill prior" style="width:65%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#d97706;">25.4</div></div>
-          <div class="bar-row"><div class="bar-label">Russellville</div><div class="bar-track"><div class="bar-fill current" style="width:62.3%;"></div><div class="bar-fill prior" style="width:59.8%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#d97706;">24.9</div></div>
-          <div class="bar-row"><div class="bar-label">Batesville</div><div class="bar-track"><div class="bar-fill current" style="width:61.8%;"></div><div class="bar-fill prior" style="width:71.3%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#d97706;">24.7</div></div>
-          <div class="bar-row"><div class="bar-label">Jonesboro</div><div class="bar-track"><div class="bar-fill current" style="width:59.3%;"></div><div class="bar-fill prior" style="width:59%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">23.7</div></div>
-          <div class="bar-row"><div class="bar-label">Searcy</div><div class="bar-track"><div class="bar-fill current" style="width:57.5%;"></div><div class="bar-fill prior" style="width:56.8%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">23.0</div></div>
-          <div class="bar-row"><div class="bar-label">Muskogee</div><div class="bar-track"><div class="bar-fill current" style="width:55.3%;"></div><div class="bar-fill prior" style="width:51.3%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">22.1</div></div>
-          <div class="bar-row"><div class="bar-label">Memphis</div><div class="bar-track"><div class="bar-fill current" style="width:54.5%;"></div><div class="bar-fill prior" style="width:60%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">21.8</div></div>
-          <div class="bar-row"><div class="bar-label">Conway</div><div class="bar-track"><div class="bar-fill current" style="width:53.3%;"></div><div class="bar-fill prior" style="width:55%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">21.3</div></div>
-          <div class="bar-row"><div class="bar-label">Little Rock</div><div class="bar-track"><div class="bar-fill current" style="width:50.3%;"></div><div class="bar-fill prior" style="width:56.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">20.1</div></div>
-          <div class="bar-row"><div class="bar-label">Harrison</div><div class="bar-track"><div class="bar-fill current" style="width:50%;"></div><div class="bar-fill prior" style="width:54.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">20.0</div></div>
-          <div class="bar-row"><div class="bar-label">Joplin</div><div class="bar-track"><div class="bar-fill current" style="width:49.5%;"></div><div class="bar-fill prior" style="width:45.3%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">19.8</div></div>
-          <div class="bar-row"><div class="bar-label">OKC</div><div class="bar-track"><div class="bar-fill current" style="width:49.3%;"></div><div class="bar-fill prior" style="width:53.8%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">19.7</div></div>
-          <div class="bar-row"><div class="bar-label">Fort Smith</div><div class="bar-track"><div class="bar-fill current" style="width:49%;"></div><div class="bar-fill prior" style="width:50.8%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">19.6</div></div>
-          <div class="bar-row"><div class="bar-label">Pine Bluff</div><div class="bar-track"><div class="bar-fill current" style="width:47.8%;"></div><div class="bar-fill prior" style="width:49.5%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val">19.1</div></div>
-          <div class="bar-row"><div class="bar-label">Texarkana</div><div class="bar-track"><div class="bar-fill current" style="width:42.8%;"></div><div class="bar-fill prior" style="width:49.3%;"></div><div class="bar-benchmark" style="left:57.5%;"></div></div><div class="bar-val" style="color:#15803d;">17.1</div></div>
-        </div>
-      </div>
-
-      <div>
-        <div class="card">
-          <div class="card-title">Risk Heatmap</div>
-          <div class="card-subtitle">Default rate severity by location</div>
-          <div class="heatmap">
-            <div class="heat-cell heat-critical"><div class="heat-loc">Clarksville</div><div class="heat-val">31.9%</div></div>
-            <div class="heat-cell heat-critical"><div class="heat-loc">Hot Springs</div><div class="heat-val">29.9%</div></div>
-            <div class="heat-cell heat-high"><div class="heat-loc">Rogers</div><div class="heat-val">28.5%</div></div>
-            <div class="heat-cell heat-high"><div class="heat-loc">Springfield</div><div class="heat-val">27.2%</div></div>
-            <div class="heat-cell heat-high"><div class="heat-loc">Tulsa</div><div class="heat-val">27.1%</div></div>
-            <div class="heat-cell heat-medium"><div class="heat-loc">Fayetteville</div><div class="heat-val">25.4%</div></div>
-            <div class="heat-cell heat-medium"><div class="heat-loc">Russellville</div><div class="heat-val">24.9%</div></div>
-            <div class="heat-cell heat-medium"><div class="heat-loc">Batesville</div><div class="heat-val">24.7%</div></div>
-            <div class="heat-cell heat-medium"><div class="heat-loc">Jonesboro</div><div class="heat-val">23.7%</div></div>
-            <div class="heat-cell heat-medium"><div class="heat-loc">Searcy</div><div class="heat-val">23.0%</div></div>
-            <div class="heat-cell heat-low"><div class="heat-loc">Muskogee</div><div class="heat-val">22.1%</div></div>
-            <div class="heat-cell heat-low"><div class="heat-loc">Memphis</div><div class="heat-val">21.8%</div></div>
-            <div class="heat-cell heat-low"><div class="heat-loc">Conway</div><div class="heat-val">21.3%</div></div>
-            <div class="heat-cell heat-low"><div class="heat-loc">Little Rock</div><div class="heat-val">20.1%</div></div>
-            <div class="heat-cell heat-low"><div class="heat-loc">Harrison</div><div class="heat-val">20.0%</div></div>
-            <div class="heat-cell heat-ok"><div class="heat-loc">Joplin</div><div class="heat-val">19.8%</div></div>
-            <div class="heat-cell heat-ok"><div class="heat-loc">OKC</div><div class="heat-val">19.7%</div></div>
-            <div class="heat-cell heat-ok"><div class="heat-loc">Fort Smith</div><div class="heat-val">19.6%</div></div>
-            <div class="heat-cell heat-ok"><div class="heat-loc">Pine Bluff</div><div class="heat-val">19.1%</div></div>
-            <div class="heat-cell heat-ok"><div class="heat-loc">Texarkana</div><div class="heat-val">17.1%</div></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Portfolio Composition</div>
-          <div class="card-subtitle">Loan status distribution across all locations</div>
-          <div class="donut-container">
-            <div class="donut" style="background:conic-gradient(#22c55e 0% 76.7%, #facc15 76.7% 89.9%, #f97316 89.9% 96.5%, #dc2626 96.5% 100%);">
-              <div style="width:80px;height:80px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                <div class="donut-center">8,524</div>
-                <div class="donut-label">Total Loans</div>
-              </div>
-            </div>
-            <div class="donut-legend">
-              <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#22c55e;"></div> Current <div class="donut-legend-val">6,536 (76.7%)</div></div>
-              <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#facc15;"></div> 30-Day DPD <div class="donut-legend-val">1,127 (13.2%)</div></div>
-              <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#f97316;"></div> 60-Day DPD <div class="donut-legend-val">563 (6.6%)</div></div>
-              <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#dc2626;"></div> 90+ Day DPD <div class="donut-legend-val">298 (3.5%)</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="insight-box">
-      <strong>&#x26A0;&#xFE0F; ML Anomaly Alert:</strong> Clarksville, AR (+4.9% QoQ) and Hot Springs, AR (+4.9% QoQ) show statistically significant deterioration exceeding 2 standard deviations from their historical mean. <strong>Immediate collections review recommended.</strong>
-    </div>
+  <div class="header-right">
+    <div class="hb hb-live">LIVE DATA</div>
+    <div class="hb hb-sp">SPICE Engine</div>
+    <div class="hb hb-ml">ML Active &middot; 91.2% R&sup2;</div>
   </div>
+</div>
 
-  <!-- TAB 2: AGING -->
-  <div class="tab-content content-aging">
-    <div class="kpi-row">
-      <div class="kpi-card accent-green">
-        <div class="kpi-label">Current Loans</div>
-        <div class="kpi-value">6,536</div>
-        <div class="kpi-delta positive">76.7% of portfolio</div>
-      </div>
-      <div class="kpi-card accent-orange">
-        <div class="kpi-label">30-Day DPD</div>
-        <div class="kpi-value">1,127</div>
-        <div class="kpi-delta warning">&#x26A1; Early intervention window</div>
-      </div>
-      <div class="kpi-card accent-red">
-        <div class="kpi-label">60-Day DPD</div>
-        <div class="kpi-value">563</div>
-        <div class="kpi-delta negative">Escalation required</div>
-      </div>
-      <div class="kpi-card accent-red">
-        <div class="kpi-label">90+ Day DPD</div>
-        <div class="kpi-value">298</div>
-        <div class="kpi-delta negative">Charge-off risk &mdash; $4.2M exposure</div>
-      </div>
+<input type="radio" name="tab" id="t1" checked><input type="radio" name="tab" id="t2"><input type="radio" name="tab" id="t3"><input type="radio" name="tab" id="t4"><input type="radio" name="tab" id="t5"><input type="radio" name="tab" id="t6"><input type="radio" name="tab" id="t7"><input type="radio" name="tab" id="t8">
+
+<div class="dash">
+<div class="tabs">
+  <label for="t1">&#x1F4CA; Overview</label>
+  <label for="t2">&#x1F4CB; Aging</label>
+  <label for="t3">&#x1F916; ML Forecast</label>
+  <label for="t4">&#x1F50D; Locations</label>
+  <label for="t5">&#x1F514; Alerts</label>
+  <label for="t6">&#x1F4AC; AI Agent</label>
+  <label for="t7">&#x1F4B0; ROI</label>
+  <label for="t8">&#x1F680; Roadmap</label>
+</div>
+
+<!-- TAB 1: OVERVIEW -->
+<div class="p p1">
+  <div class="kr kr5">
+    <div class="k ao"><div class="kl">Portfolio Value</div><div class="kv">$730.2M</div><div class="kd wrn">Annual collections volume</div><div class="sp"><b style="height:40%;background:#FF9900"></b><b style="height:55%;background:#FF9900"></b><b style="height:50%;background:#FF9900"></b><b style="height:65%;background:#FF9900"></b><b style="height:60%;background:#FF9900"></b><b style="height:70%;background:#FF9900"></b><b style="height:58%;background:#FF9900"></b><b style="height:75%;background:#FF9900"></b></div></div>
+    <div class="k ar"><div class="kl">Default Rate</div><div class="kv">23.0%</div><div class="kd neg">&#x25B2; 1.2% vs prior year</div><div class="sp"><b style="height:35%;background:#dc2626"></b><b style="height:40%;background:#dc2626"></b><b style="height:50%;background:#dc2626"></b><b style="height:65%;background:#dc2626"></b><b style="height:70%;background:#dc2626"></b><b style="height:80%;background:#dc2626"></b><b style="height:75%;background:#dc2626"></b><b style="height:60%;background:#dc2626"></b></div></div>
+    <div class="k ab"><div class="kl">Active Loans</div><div class="kv">8,524</div><div class="kd neg">&#x25BC; 14.3% vs prior year</div><div class="sp"><b style="height:90%;background:#2563eb"></b><b style="height:85%;background:#2563eb"></b><b style="height:78%;background:#2563eb"></b><b style="height:70%;background:#2563eb"></b><b style="height:65%;background:#2563eb"></b><b style="height:58%;background:#2563eb"></b><b style="height:55%;background:#2563eb"></b><b style="height:50%;background:#2563eb"></b></div></div>
+    <div class="k ag"><div class="kl">Collection Rate</div><div class="kv">81.2%</div><div class="kd pos">&#x25B2; 0.8% vs prior qtr</div><div class="sp"><b style="height:55%;background:#15803d"></b><b style="height:58%;background:#15803d"></b><b style="height:60%;background:#15803d"></b><b style="height:62%;background:#15803d"></b><b style="height:65%;background:#15803d"></b><b style="height:68%;background:#15803d"></b><b style="height:72%;background:#15803d"></b><b style="height:78%;background:#15803d"></b></div></div>
+    <div class="k ap"><div class="kl">90+ DPD Exposure</div><div class="kv">$4.2M</div><div class="kd neg">298 accounts at risk</div><div class="sp"><b style="height:45%;background:#7c3aed"></b><b style="height:50%;background:#7c3aed"></b><b style="height:55%;background:#7c3aed"></b><b style="height:62%;background:#7c3aed"></b><b style="height:58%;background:#7c3aed"></b><b style="height:65%;background:#7c3aed"></b><b style="height:60%;background:#7c3aed"></b><b style="height:55%;background:#7c3aed"></b></div></div>
+  </div>
+  <div class="g2">
+    <div class="c">
+      <div class="ct">Default Rate by Location</div>
+      <div class="cs">Current Qtr vs Prior Qtr &mdash; Red line = 23% benchmark</div>
+      <div class="lg"><div class="li"><div class="ld" style="background:#2563eb"></div> Current</div><div class="li"><div class="ld" style="background:#cbd5e1"></div> Prior</div><div class="li"><div class="ld" style="background:#dc2626"></div> 23%</div></div>
+      <div class="br"><div class="bl">Clarksville</div><div class="bt"><div class="bf cu" style="width:79.8%"></div><div class="bf pr" style="width:67.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#dc2626">31.9</div></div>
+      <div class="br"><div class="bl">Hot Springs</div><div class="bt"><div class="bf cu" style="width:74.8%"></div><div class="bf pr" style="width:62.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#dc2626">29.9</div></div>
+      <div class="br"><div class="bl">Rogers</div><div class="bt"><div class="bf cu" style="width:71.3%"></div><div class="bf pr" style="width:70%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#dc2626">28.5</div></div>
+      <div class="br"><div class="bl">Springfield</div><div class="bt"><div class="bf cu" style="width:68%"></div><div class="bf pr" style="width:59.3%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#d97706">27.2</div></div>
+      <div class="br"><div class="bl">Tulsa</div><div class="bt"><div class="bf cu" style="width:67.8%"></div><div class="bf pr" style="width:58.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#d97706">27.1</div></div>
+      <div class="br"><div class="bl">Fayetteville</div><div class="bt"><div class="bf cu" style="width:63.5%"></div><div class="bf pr" style="width:65%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#d97706">25.4</div></div>
+      <div class="br"><div class="bl">Russellville</div><div class="bt"><div class="bf cu" style="width:62.3%"></div><div class="bf pr" style="width:59.8%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#d97706">24.9</div></div>
+      <div class="br"><div class="bl">Batesville</div><div class="bt"><div class="bf cu" style="width:61.8%"></div><div class="bf pr" style="width:71.3%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#d97706">24.7</div></div>
+      <div class="br"><div class="bl">Jonesboro</div><div class="bt"><div class="bf cu" style="width:59.3%"></div><div class="bf pr" style="width:59%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">23.7</div></div>
+      <div class="br"><div class="bl">Searcy</div><div class="bt"><div class="bf cu" style="width:57.5%"></div><div class="bf pr" style="width:56.8%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">23.0</div></div>
+      <div class="br"><div class="bl">Muskogee</div><div class="bt"><div class="bf cu" style="width:55.3%"></div><div class="bf pr" style="width:51.3%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">22.1</div></div>
+      <div class="br"><div class="bl">Memphis</div><div class="bt"><div class="bf cu" style="width:54.5%"></div><div class="bf pr" style="width:60%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">21.8</div></div>
+      <div class="br"><div class="bl">Conway</div><div class="bt"><div class="bf cu" style="width:53.3%"></div><div class="bf pr" style="width:55%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">21.3</div></div>
+      <div class="br"><div class="bl">Little Rock</div><div class="bt"><div class="bf cu" style="width:50.3%"></div><div class="bf pr" style="width:56.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">20.1</div></div>
+      <div class="br"><div class="bl">Harrison</div><div class="bt"><div class="bf cu" style="width:50%"></div><div class="bf pr" style="width:54.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">20.0</div></div>
+      <div class="br"><div class="bl">Joplin</div><div class="bt"><div class="bf cu" style="width:49.5%"></div><div class="bf pr" style="width:45.3%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">19.8</div></div>
+      <div class="br"><div class="bl">OKC</div><div class="bt"><div class="bf cu" style="width:49.3%"></div><div class="bf pr" style="width:53.8%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">19.7</div></div>
+      <div class="br"><div class="bl">Fort Smith</div><div class="bt"><div class="bf cu" style="width:49%"></div><div class="bf pr" style="width:50.8%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">19.6</div></div>
+      <div class="br"><div class="bl">Pine Bluff</div><div class="bt"><div class="bf cu" style="width:47.8%"></div><div class="bf pr" style="width:49.5%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv">19.1</div></div>
+      <div class="br"><div class="bl">Texarkana</div><div class="bt"><div class="bf cu" style="width:42.8%"></div><div class="bf pr" style="width:49.3%"></div><div class="bm" style="left:57.5%"></div></div><div class="bv" style="color:#15803d">17.1</div></div>
     </div>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">Aging Distribution &mdash; Top 10 At-Risk Locations</div>
-        <div class="card-subtitle">Loan count by delinquency bucket | Sorted by default rate</div>
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Current</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#facc15;"></div> 30-Day</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f97316;"></div> 60-Day</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div> 90+</div>
+    <div>
+      <div class="c">
+        <div class="ct">Risk Heatmap</div><div class="cs">Default rate severity &mdash; 20 locations</div>
+        <div class="hm">
+          <div class="hc h1"><div class="hn">Clarksville</div><div class="hv">31.9%</div></div>
+          <div class="hc h1"><div class="hn">Hot Springs</div><div class="hv">29.9%</div></div>
+          <div class="hc h2"><div class="hn">Rogers</div><div class="hv">28.5%</div></div>
+          <div class="hc h2"><div class="hn">Springfield</div><div class="hv">27.2%</div></div>
+          <div class="hc h2"><div class="hn">Tulsa</div><div class="hv">27.1%</div></div>
+          <div class="hc h3"><div class="hn">Fayetteville</div><div class="hv">25.4%</div></div>
+          <div class="hc h3"><div class="hn">Russellville</div><div class="hv">24.9%</div></div>
+          <div class="hc h3"><div class="hn">Batesville</div><div class="hv">24.7%</div></div>
+          <div class="hc h3"><div class="hn">Jonesboro</div><div class="hv">23.7%</div></div>
+          <div class="hc h3"><div class="hn">Searcy</div><div class="hv">23.0%</div></div>
+          <div class="hc h4"><div class="hn">Muskogee</div><div class="hv">22.1%</div></div>
+          <div class="hc h4"><div class="hn">Memphis</div><div class="hv">21.8%</div></div>
+          <div class="hc h4"><div class="hn">Conway</div><div class="hv">21.3%</div></div>
+          <div class="hc h4"><div class="hn">Little Rock</div><div class="hv">20.1%</div></div>
+          <div class="hc h4"><div class="hn">Harrison</div><div class="hv">20.0%</div></div>
+          <div class="hc h5"><div class="hn">Joplin</div><div class="hv">19.8%</div></div>
+          <div class="hc h5"><div class="hn">OKC</div><div class="hv">19.7%</div></div>
+          <div class="hc h5"><div class="hn">Fort Smith</div><div class="hv">19.6%</div></div>
+          <div class="hc h5"><div class="hn">Pine Bluff</div><div class="hv">19.1%</div></div>
+          <div class="hc h5"><div class="hn">Texarkana</div><div class="hv">17.1%</div></div>
         </div>
-        <div class="stack-row"><div class="stack-label">Clarksville</div><div class="stack-track"><div class="stack-seg seg-current" style="width:79.7%;"></div><div class="stack-seg seg-30" style="width:10.6%;"></div><div class="stack-seg seg-60" style="width:7.7%;"></div><div class="stack-seg seg-90" style="width:2%;"></div></div><div class="stack-val">404</div></div>
-        <div class="stack-row"><div class="stack-label">Hot Springs</div><div class="stack-track"><div class="stack-seg seg-current" style="width:71%;"></div><div class="stack-seg seg-30" style="width:14.4%;"></div><div class="stack-seg seg-60" style="width:9.3%;"></div><div class="stack-seg seg-90" style="width:5.4%;"></div></div><div class="stack-val">410</div></div>
-        <div class="stack-row"><div class="stack-label">Rogers</div><div class="stack-track"><div class="stack-seg seg-current" style="width:78.7%;"></div><div class="stack-seg seg-30" style="width:9.9%;"></div><div class="stack-seg seg-60" style="width:7%;"></div><div class="stack-seg seg-90" style="width:4.3%;"></div></div><div class="stack-val">625</div></div>
-        <div class="stack-row"><div class="stack-label">Springfield</div><div class="stack-track"><div class="stack-seg seg-current" style="width:84.2%;"></div><div class="stack-seg seg-30" style="width:8.7%;"></div><div class="stack-seg seg-60" style="width:5.1%;"></div><div class="stack-seg seg-90" style="width:2%;"></div></div><div class="stack-val">450</div></div>
-        <div class="stack-row"><div class="stack-label">Tulsa</div><div class="stack-track"><div class="stack-seg seg-current" style="width:77.4%;"></div><div class="stack-seg seg-30" style="width:13.9%;"></div><div class="stack-seg seg-60" style="width:6.5%;"></div><div class="stack-seg seg-90" style="width:2.2%;"></div></div><div class="stack-val">368</div></div>
-        <div class="stack-row"><div class="stack-label">Fayetteville</div><div class="stack-track"><div class="stack-seg seg-current" style="width:77.5%;"></div><div class="stack-seg seg-30" style="width:13.3%;"></div><div class="stack-seg seg-60" style="width:3.9%;"></div><div class="stack-seg seg-90" style="width:5.3%;"></div></div><div class="stack-val">285</div></div>
-        <div class="stack-row"><div class="stack-label">Russellville</div><div class="stack-track"><div class="stack-seg seg-current" style="width:73.7%;"></div><div class="stack-seg seg-30" style="width:16%;"></div><div class="stack-seg seg-60" style="width:5%;"></div><div class="stack-seg seg-90" style="width:5.4%;"></div></div><div class="stack-val">463</div></div>
-        <div class="stack-row"><div class="stack-label">Batesville</div><div class="stack-track"><div class="stack-seg seg-current" style="width:77%;"></div><div class="stack-seg seg-30" style="width:13.9%;"></div><div class="stack-seg seg-60" style="width:6.8%;"></div><div class="stack-seg seg-90" style="width:2.2%;"></div></div><div class="stack-val">366</div></div>
-        <div class="stack-row"><div class="stack-label">Jonesboro</div><div class="stack-track"><div class="stack-seg seg-current" style="width:72%;"></div><div class="stack-seg seg-30" style="width:17.3%;"></div><div class="stack-seg seg-60" style="width:7.2%;"></div><div class="stack-seg seg-90" style="width:3.5%;"></div></div><div class="stack-val">567</div></div>
-        <div class="stack-row"><div class="stack-label">Searcy</div><div class="stack-track"><div class="stack-seg seg-current" style="width:83.2%;"></div><div class="stack-seg seg-30" style="width:8.6%;"></div><div class="stack-seg seg-60" style="width:5.5%;"></div><div class="stack-seg seg-90" style="width:2.7%;"></div></div><div class="stack-val">292</div></div>
       </div>
-
-      <div class="card">
-        <div class="card-title">Roll Rate Analysis</div>
-        <div class="card-subtitle">How accounts transition between buckets month-over-month</div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:12px;color:#666;margin-bottom:8px;font-weight:600;">Current &#x2192; 30-Day Roll Rate</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:8.2%;height:100%;background:linear-gradient(90deg,#facc15,#f59e0b);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#d97706;">8.2%</span>
+      <div class="c">
+        <div class="ct">Portfolio Composition</div><div class="cs">8,524 active loans by status</div>
+        <div class="dw">
+          <div class="dn" style="background:conic-gradient(#22c55e 0% 76.7%,#facc15 76.7% 89.9%,#f97316 89.9% 96.5%,#dc2626 96.5% 100%)"><div class="di"><div class="dv">8,524</div><div class="ds">Total Loans</div></div></div>
+          <div class="dl">
+            <div class="dli"><div class="dld" style="background:#22c55e"></div> Current <div class="dlv">6,536 (76.7%)</div></div>
+            <div class="dli"><div class="dld" style="background:#facc15"></div> 30-Day <div class="dlv">1,127 (13.2%)</div></div>
+            <div class="dli"><div class="dld" style="background:#f97316"></div> 60-Day <div class="dlv">563 (6.6%)</div></div>
+            <div class="dli"><div class="dld" style="background:#dc2626"></div> 90+ Day <div class="dlv">298 (3.5%)</div></div>
           </div>
         </div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:12px;color:#666;margin-bottom:8px;font-weight:600;">30-Day &#x2192; 60-Day Roll Rate</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:38.5%;height:100%;background:linear-gradient(90deg,#f97316,#ea580c);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#ea580c;">38.5%</span>
-          </div>
-        </div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:12px;color:#666;margin-bottom:8px;font-weight:600;">60-Day &#x2192; 90+ Day Roll Rate</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:52.9%;height:100%;background:linear-gradient(90deg,#dc2626,#b91c1c);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#dc2626;">52.9%</span>
-          </div>
-        </div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:12px;color:#666;margin-bottom:8px;font-weight:600;">90+ Day &#x2192; Charge-Off Rate</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:71.3%;height:100%;background:linear-gradient(90deg,#991b1b,#7f1d1d);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#991b1b;">71.3%</span>
-          </div>
-        </div>
-        <div class="insight-box" style="margin-top:12px;">
-          <strong>&#x1F3AF; Key Insight:</strong> Once an account reaches 60-day DPD, there's a <strong>52.9% chance</strong> it rolls to 90+. The optimal intervention window is <strong>within the first 15 days</strong> of delinquency.
-        </div>
-        <div style="margin-top:16px;padding:14px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0;">
-          <div style="font-size:12px;font-weight:600;color:#15803d;margin-bottom:6px;">&#x1F4B0; Intervention Impact Model</div>
-          <div style="font-size:12px;color:#444;line-height:1.6;">
-            If early intervention reduces the 30&#x2192;60 roll rate by <strong>10 percentage points</strong> (38.5% &#x2192; 28.5%):<br>
-            &bull; ~113 fewer accounts reach 60-day DPD per month<br>
-            &bull; ~60 fewer accounts reach 90+ DPD per month<br>
-            &bull; <strong>Estimated annual savings: $7.2M</strong>
-          </div>
+      </div>
+      <div class="c">
+        <div class="ct">Key Financial Context</div><div class="cs">FY2026 performance</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="mini"><div class="mini-l">FY2026 Revenue</div><div class="mini-v">$1.28B</div><div class="mini-d" style="color:#dc2626">&#x25BC; 7.9% YoY</div></div>
+          <div class="mini"><div class="mini-l">Units Sold</div><div class="mini-v">48,891</div><div class="mini-d" style="color:#dc2626">&#x25BC; 14.3% YoY</div></div>
+          <div class="mini"><div class="mini-l">Avg Loan Size</div><div class="mini-v">$85,672</div><div class="mini-d" style="color:#666">42-month avg term</div></div>
+          <div class="mini"><div class="mini-l">Monthly Collections</div><div class="mini-v">$48.3M</div><div class="mini-d" style="color:#666">Current run rate</div></div>
         </div>
       </div>
     </div>
   </div>
+  <div class="ins"><strong>&#x26A0;&#xFE0F; ML Anomaly Alert:</strong> Clarksville (+4.9% QoQ) and Hot Springs (+4.9% QoQ) show statistically significant deterioration exceeding 2 standard deviations. <strong>Immediate collections review recommended.</strong></div>
+</div>
 
-  <!-- TAB 3: ML FORECAST -->
-  <div class="tab-content content-forecast">
-    <div class="kpi-row">
-      <div class="kpi-card accent-blue">
-        <div class="kpi-label">Current Default Rate</div>
-        <div class="kpi-value">22.4%</div>
-        <div class="kpi-delta positive">&#x25BC; from 24.1% peak (Jun '26)</div>
+<!-- TAB 2: AGING -->
+<div class="p p2">
+  <div class="kr">
+    <div class="k ag"><div class="kl">Current Loans</div><div class="kv">6,536</div><div class="kd pos">76.7% of portfolio</div></div>
+    <div class="k ao"><div class="kl">30-Day DPD</div><div class="kv">1,127</div><div class="kd wrn">&#x26A1; Intervention window</div></div>
+    <div class="k ar"><div class="kl">60-Day DPD</div><div class="kv">563</div><div class="kd neg">Escalation required</div></div>
+    <div class="k ar"><div class="kl">90+ Day DPD</div><div class="kv">298</div><div class="kd neg">$4.2M exposure</div></div>
+  </div>
+  <div class="g2">
+    <div class="c">
+      <div class="ct">Aging Distribution &mdash; Top 10 At-Risk</div><div class="cs">Loan count by bucket | Sorted by default rate</div>
+      <div class="lg"><div class="li"><div class="ld" style="background:#22c55e"></div> Current</div><div class="li"><div class="ld" style="background:#facc15"></div> 30-Day</div><div class="li"><div class="ld" style="background:#f97316"></div> 60-Day</div><div class="li"><div class="ld" style="background:#dc2626"></div> 90+</div></div>
+      <div class="sr"><div class="sl">Clarksville</div><div class="st"><div class="ss sc" style="width:79.7%"></div><div class="ss s3" style="width:10.6%"></div><div class="ss s6" style="width:7.7%"></div><div class="ss s9" style="width:2%"></div></div><div class="sv">404</div></div>
+      <div class="sr"><div class="sl">Hot Springs</div><div class="st"><div class="ss sc" style="width:71%"></div><div class="ss s3" style="width:14.4%"></div><div class="ss s6" style="width:9.3%"></div><div class="ss s9" style="width:5.4%"></div></div><div class="sv">410</div></div>
+      <div class="sr"><div class="sl">Rogers</div><div class="st"><div class="ss sc" style="width:78.7%"></div><div class="ss s3" style="width:9.9%"></div><div class="ss s6" style="width:7%"></div><div class="ss s9" style="width:4.3%"></div></div><div class="sv">625</div></div>
+      <div class="sr"><div class="sl">Springfield</div><div class="st"><div class="ss sc" style="width:84.2%"></div><div class="ss s3" style="width:8.7%"></div><div class="ss s6" style="width:5.1%"></div><div class="ss s9" style="width:2%"></div></div><div class="sv">450</div></div>
+      <div class="sr"><div class="sl">Tulsa</div><div class="st"><div class="ss sc" style="width:77.4%"></div><div class="ss s3" style="width:13.9%"></div><div class="ss s6" style="width:6.5%"></div><div class="ss s9" style="width:2.2%"></div></div><div class="sv">368</div></div>
+      <div class="sr"><div class="sl">Fayetteville</div><div class="st"><div class="ss sc" style="width:77.5%"></div><div class="ss s3" style="width:13.3%"></div><div class="ss s6" style="width:3.9%"></div><div class="ss s9" style="width:5.3%"></div></div><div class="sv">285</div></div>
+      <div class="sr"><div class="sl">Russellville</div><div class="st"><div class="ss sc" style="width:73.7%"></div><div class="ss s3" style="width:16%"></div><div class="ss s6" style="width:5%"></div><div class="ss s9" style="width:5.4%"></div></div><div class="sv">463</div></div>
+      <div class="sr"><div class="sl">Batesville</div><div class="st"><div class="ss sc" style="width:77%"></div><div class="ss s3" style="width:13.9%"></div><div class="ss s6" style="width:6.8%"></div><div class="ss s9" style="width:2.2%"></div></div><div class="sv">366</div></div>
+      <div class="sr"><div class="sl">Jonesboro</div><div class="st"><div class="ss sc" style="width:72%"></div><div class="ss s3" style="width:17.3%"></div><div class="ss s6" style="width:7.2%"></div><div class="ss s9" style="width:3.5%"></div></div><div class="sv">567</div></div>
+      <div class="sr"><div class="sl">Searcy</div><div class="st"><div class="ss sc" style="width:83.2%"></div><div class="ss s3" style="width:8.6%"></div><div class="ss s6" style="width:5.5%"></div><div class="ss s9" style="width:2.7%"></div></div><div class="sv">292</div></div>
+    </div>
+    <div>
+      <div class="c">
+        <div class="ct">Roll Rate Analysis</div><div class="cs">Account transitions between buckets (monthly)</div>
+        <div class="pb"><div class="ph"><span>Current &#x2192; 30-Day</span><span style="color:#d97706">8.2%</span></div><div class="pt"><div class="pf" style="width:8.2%;background:linear-gradient(90deg,#facc15,#f59e0b)"></div></div></div>
+        <div class="pb"><div class="ph"><span>30-Day &#x2192; 60-Day</span><span style="color:#ea580c">38.5%</span></div><div class="pt"><div class="pf" style="width:38.5%;background:linear-gradient(90deg,#f97316,#ea580c)"></div></div></div>
+        <div class="pb"><div class="ph"><span>60-Day &#x2192; 90+ Day</span><span style="color:#dc2626">52.9%</span></div><div class="pt"><div class="pf" style="width:52.9%;background:linear-gradient(90deg,#dc2626,#b91c1c)"></div></div></div>
+        <div class="pb"><div class="ph"><span>90+ Day &#x2192; Charge-Off</span><span style="color:#991b1b">71.3%</span></div><div class="pt"><div class="pf" style="width:71.3%;background:linear-gradient(90deg,#991b1b,#7f1d1d)"></div></div></div>
+        <div class="ins"><strong>&#x1F3AF; Key Insight:</strong> Once at 60-day DPD, <strong>52.9% chance</strong> of rolling to 90+. Optimal intervention: <strong>first 15 days</strong> of delinquency.</div>
       </div>
-      <div class="kpi-card accent-orange">
-        <div class="kpi-label">ML Forecast (Dec '26)</div>
-        <div class="kpi-value">21.5%</div>
-        <div class="kpi-delta warning">Without intervention</div>
+      <div class="c">
+        <div class="ct">&#x1F4B0; Intervention Impact Model</div><div class="cs">Reduce 30&#x2192;60 roll rate by 10 points</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div style="padding:10px;background:#f0fdf4;border-radius:8px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:18px;font-weight:700;font-family:monospace;color:#15803d">~113</div><div style="font-size:10px;color:#666">Fewer 60-DPD/mo</div></div>
+          <div style="padding:10px;background:#f0fdf4;border-radius:8px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:18px;font-weight:700;font-family:monospace;color:#15803d">~60</div><div style="font-size:10px;color:#666">Fewer 90+ DPD/mo</div></div>
+          <div style="padding:10px;background:#f0fdf4;border-radius:8px;text-align:center;border:1px solid #bbf7d0"><div style="font-size:18px;font-weight:700;font-family:monospace;color:#15803d">$7.2M</div><div style="font-size:10px;color:#666">Annual savings</div></div>
+        </div>
       </div>
-      <div class="kpi-card accent-green">
-        <div class="kpi-label">Target (Dec '26)</div>
-        <div class="kpi-value">20.2%</div>
-        <div class="kpi-delta positive">With early intervention</div>
-      </div>
-      <div class="kpi-card accent-green">
-        <div class="kpi-label">Est. Annual Savings</div>
-        <div class="kpi-value">$7M+</div>
-        <div class="kpi-delta positive">Avoided charge-offs</div>
+      <div class="c">
+        <div class="ct">&#x26A0;&#xFE0F; Russellville Roll Rate Alert</div><div class="cs">Elevated transition rate detected</div>
+        <div class="pb"><div class="ph"><span>Current 30&#x2192;60 Roll</span><span style="color:#dc2626">44.6%</span></div><div class="pt"><div class="pf" style="width:44.6%;background:linear-gradient(90deg,#dc2626,#b91c1c)"></div></div></div>
+        <div class="pb"><div class="ph"><span>Portfolio Average</span><span style="color:#666">38.5%</span></div><div class="pt"><div class="pf" style="width:38.5%;background:#94a3b8"></div></div></div>
+        <div style="font-size:11px;color:#555;margin-top:6px;line-height:1.5"><strong>+6.1pts above average</strong> &mdash; 74 loans in 30-day bucket. ML predicts 32 accounts will roll to 60-day within 2 weeks.</div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="card">
-      <div class="card-title">Portfolio Default Rate &mdash; 15-Month Trend with ML Forecast</div>
-      <div class="card-subtitle">Actual (Oct '25 &ndash; Sep '26) &#x2192; ML Forecast (Oct &ndash; Dec '26)</div>
-      <div class="forecast-container">
-        <div style="position:relative;">
-          <div style="position:absolute;left:0;right:0;bottom:78px;border-top:2px dashed #dc2626;z-index:1;"></div>
-          <div style="position:absolute;right:0;bottom:80px;font-size:10px;color:#dc2626;font-weight:600;">23% Risk Threshold</div>
-        </div>
-        <div class="forecast-row">
-          <div class="forecast-bar" style="height:55px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">21.2</div><div class="fb-label">Oct</div></div>
-          <div class="forecast-bar" style="height:61px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">21.5</div><div class="fb-label">Nov</div></div>
-          <div class="forecast-bar" style="height:71px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">22.0</div><div class="fb-label">Dec</div></div>
-          <div class="forecast-bar" style="height:87px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">22.8</div><div class="fb-label">Jan</div></div>
-          <div class="forecast-bar" style="height:93px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val">23.1</div><div class="fb-label">Feb</div></div>
-          <div class="forecast-bar" style="height:101px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val">23.5</div><div class="fb-label">Mar</div></div>
-          <div class="forecast-bar" style="height:95px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val">23.2</div><div class="fb-label">Apr</div></div>
-          <div class="forecast-bar" style="height:107px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val">23.8</div><div class="fb-label">May</div></div>
-          <div class="forecast-bar" style="height:113px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val" style="font-weight:700;">24.1</div><div class="fb-label">Jun &#x25B2;</div></div>
-          <div class="forecast-bar" style="height:103px;background:linear-gradient(180deg,#ef4444,#dc2626);"><div class="fb-val">23.6</div><div class="fb-label">Jul</div></div>
-          <div class="forecast-bar" style="height:91px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">23.0</div><div class="fb-label">Aug</div></div>
-          <div class="forecast-bar" style="height:79px;background:linear-gradient(180deg,#3b82f6,#2563eb);"><div class="fb-val">22.4</div><div class="fb-label">Sep</div></div>
-          <div style="width:2px;background:#94a3b8;margin:0 2px;border-radius:1px;height:200px;opacity:.4;"></div>
-          <div class="forecast-bar" style="height:73px;background:rgba(148,163,184,0.25);border:2px dashed #94a3b8;"><div class="fb-val" style="color:#666;">22.1</div><div class="fb-label">Oct*</div></div>
-          <div class="forecast-bar" style="height:67px;background:rgba(148,163,184,0.25);border:2px dashed #94a3b8;"><div class="fb-val" style="color:#666;">21.8</div><div class="fb-label">Nov*</div></div>
-          <div class="forecast-bar" style="height:61px;background:rgba(148,163,184,0.25);border:2px dashed #94a3b8;"><div class="fb-val" style="color:#666;">21.5</div><div class="fb-label">Dec*</div></div>
-        </div>
-      </div>
-      <div class="legend" style="margin-top:28px;">
-        <div class="legend-item"><div class="legend-dot" style="background:#2563eb;"></div> Actual (below 23%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div> Actual (above 23%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#94a3b8;"></div> ML Forecast</div>
+<!-- TAB 3: ML FORECAST -->
+<div class="p p3">
+  <div class="kr">
+    <div class="k ab"><div class="kl">Current Default Rate</div><div class="kv">22.4%</div><div class="kd pos">&#x25BC; from 24.1% peak (Jun '26)</div></div>
+    <div class="k ao"><div class="kl">ML Forecast (Dec '26)</div><div class="kv">21.5%</div><div class="kd wrn">Without intervention</div></div>
+    <div class="k ag"><div class="kl">Target w/ Intervention</div><div class="kv">20.2%</div><div class="kd pos">&#x25BC; 2.2pts from current</div></div>
+    <div class="k ag"><div class="kl">Est. Annual Savings</div><div class="kv">$7M+</div><div class="kd pos">Avoided charge-offs</div></div>
+  </div>
+  <div class="c">
+    <div class="ct">Portfolio Default Rate &mdash; 15-Month Trend with ML Forecast</div>
+    <div class="cs">Actual (Oct '25 &ndash; Sep '26) &#x2192; ML Forecast (Oct &ndash; Dec '26) &nbsp;|&nbsp; Confidence: &plusmn;0.4% &nbsp;|&nbsp; XGBoost + ARIMA Ensemble</div>
+    <div style="position:relative;padding-bottom:28px;">
+      <div class="fc">
+        <div class="fb" style="height:50px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">21.2</div><div class="fl">Oct</div></div>
+        <div class="fb" style="height:56px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">21.5</div><div class="fl">Nov</div></div>
+        <div class="fb" style="height:66px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">22.0</div><div class="fl">Dec</div></div>
+        <div class="fb" style="height:82px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">22.8</div><div class="fl">Jan</div></div>
+        <div class="fb" style="height:88px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv">23.1</div><div class="fl">Feb</div></div>
+        <div class="fb" style="height:96px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv">23.5</div><div class="fl">Mar</div></div>
+        <div class="fb" style="height:90px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv">23.2</div><div class="fl">Apr</div></div>
+        <div class="fb" style="height:104px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv">23.8</div><div class="fl">May</div></div>
+        <div class="fb" style="height:112px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv" style="font-weight:800">24.1</div><div class="fl">Jun&#x25B2;</div></div>
+        <div class="fb" style="height:98px;background:linear-gradient(180deg,#ef4444,#dc2626)"><div class="fv">23.6</div><div class="fl">Jul</div></div>
+        <div class="fb" style="height:86px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">23.0</div><div class="fl">Aug</div></div>
+        <div class="fb" style="height:74px;background:linear-gradient(180deg,#3b82f6,#2563eb)"><div class="fv">22.4</div><div class="fl">Sep</div></div>
+        <div style="width:2px;background:#94a3b8;margin:0 2px;border-radius:1px;height:180px;opacity:.4"></div>
+        <div class="fb" style="height:68px;background:rgba(148,163,184,.2);border:2px dashed #94a3b8"><div class="fv" style="color:#666">22.1</div><div class="fl">Oct*</div></div>
+        <div class="fb" style="height:62px;background:rgba(148,163,184,.2);border:2px dashed #94a3b8"><div class="fv" style="color:#666">21.8</div><div class="fl">Nov*</div></div>
+        <div class="fb" style="height:56px;background:rgba(148,163,184,.2);border:2px dashed #94a3b8"><div class="fv" style="color:#666">21.5</div><div class="fl">Dec*</div></div>
       </div>
     </div>
+    <div class="lg" style="margin-top:24px"><div class="li"><div class="ld" style="background:#2563eb"></div> Actual (below 23%)</div><div class="li"><div class="ld" style="background:#dc2626"></div> Actual (above 23%)</div><div class="li"><div class="ld" style="background:#94a3b8"></div> ML Forecast</div></div>
+  </div>
+  <div class="g2">
+    <div class="c">
+      <div class="ct">ML Model Performance</div><div class="cs">XGBoost + ARIMA Ensemble &mdash; 36 months training data</div>
+      <div class="pb"><div class="ph"><span>Model Accuracy (R&sup2;)</span><span style="color:#15803d">91.2%</span></div><div class="pt"><div class="pf" style="width:91.2%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div></div>
+      <div class="pb"><div class="ph"><span>Precision</span><span style="color:#15803d">88.7%</span></div><div class="pt"><div class="pf" style="width:88.7%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div></div>
+      <div class="pb"><div class="ph"><span>Recall (Default Prediction)</span><span style="color:#15803d">84.3%</span></div><div class="pt"><div class="pf" style="width:84.3%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div></div>
+      <div class="pb"><div class="ph"><span>MAE</span><span style="color:#666">0.82%</span></div><div class="pt"><div class="pf" style="width:8.2%;background:#94a3b8"></div></div></div>
+      <div class="pb"><div class="ph"><span>RMSE</span><span style="color:#666">1.04%</span></div><div class="pt"><div class="pf" style="width:10.4%;background:#94a3b8"></div></div></div>
+      <div style="font-size:10px;color:#888;margin-top:8px">Retraining: Weekly on latest payment data</div>
+    </div>
+    <div class="c">
+      <div class="ct">Top Predictive Features</div><div class="cs">What drives default predictions</div>
+      <div class="pb"><div class="ph"><span>Payment history (last 90 days)</span><span>34.2%</span></div><div class="pt"><div class="pf" style="width:34.2%;background:#2563eb"></div></div></div>
+      <div class="pb"><div class="ph"><span>Days since last payment</span><span>22.8%</span></div><div class="pt"><div class="pf" style="width:22.8%;background:#2563eb"></div></div></div>
+      <div class="pb"><div class="ph"><span>Loan-to-value ratio</span><span>16.5%</span></div><div class="pt"><div class="pf" style="width:16.5%;background:#2563eb"></div></div></div>
+      <div class="pb"><div class="ph"><span>Employment tenure</span><span>12.1%</span></div><div class="pt"><div class="pf" style="width:12.1%;background:#2563eb"></div></div></div>
+      <div class="pb"><div class="ph"><span>Seasonal pattern index</span><span>8.7%</span></div><div class="pt"><div class="pf" style="width:8.7%;background:#2563eb"></div></div></div>
+      <div class="pb"><div class="ph"><span>Vehicle age / mileage</span><span>5.7%</span></div><div class="pt"><div class="pf" style="width:5.7%;background:#2563eb"></div></div></div>
+    </div>
+  </div>
+  <div class="ins ins-g"><strong>&#x1F4C8; With Intervention Forecast:</strong> If early intervention is deployed by Oct '26, the model projects reaching <strong>20.2% by Dec '26</strong> (vs 21.5% without). Q1 2027 charge-offs: <strong>$14.8M with intervention vs $18.2M without = $3.4M saved in Q1 alone.</strong></div>
+</div>
 
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">ML Model Confidence</div>
-        <div class="card-subtitle">Forecast accuracy metrics</div>
-        <div style="margin-bottom:14px;">
-          <div style="font-size:12px;color:#666;margin-bottom:6px;">Model Accuracy (R&sup2;)</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:91%;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#15803d;">91.2%</span>
-          </div>
-        </div>
-        <div style="margin-bottom:14px;">
-          <div style="font-size:12px;color:#666;margin-bottom:6px;">Precision</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:87.4%;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#15803d;">87.4%</span>
-          </div>
-        </div>
-        <div style="margin-bottom:14px;">
-          <div style="font-size:12px;color:#666;margin-bottom:6px;">Recall</div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="flex:1;height:10px;background:#f0f2f5;border-radius:5px;overflow:hidden;"><div style="width:92.1%;height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:5px;"></div></div>
-            <span style="font-family:monospace;font-size:13px;font-weight:600;color:#15803d;">92.1%</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Top Predictive Features</div>
-        <div class="card-subtitle">What drives default predictions</div>
-        <div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;"><span>Payment history (last 90 days)</span><span style="font-family:monospace;font-weight:600;">34.2%</span></div>
-          <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="width:34.2%;height:100%;background:#2563eb;border-radius:3px;"></div></div>
-        </div>
-        <div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;"><span>Days since last payment</span><span style="font-family:monospace;font-weight:600;">22.8%</span></div>
-          <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="width:22.8%;height:100%;background:#2563eb;border-radius:3px;"></div></div>
-        </div>
-        <div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;"><span>Loan-to-value ratio</span><span style="font-family:monospace;font-weight:600;">16.5%</span></div>
-          <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="width:16.5%;height:100%;background:#2563eb;border-radius:3px;"></div></div>
-        </div>
-        <div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;"><span>Employment tenure</span><span style="font-family:monospace;font-weight:600;">12.1%</span></div>
-          <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div style="width:12.1%;height:100%;background:#2563eb;border-radius:3px;"></div></div>
-        </div>
-        <div style="margin-bottom:8px;">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:3px;"><span>Seasonal pattern index</span><span style="font-family:monospace;font-weight:600;">8.7%</span></div>
-          <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;"><div
+<!-- TAB 4: LOCATION DETAIL -->
+<div class="p p4">
+  <div class="kr kr5">
+    <div class="k ar"><div class="kl">Critical Locations</div><div class="kv">5</div><div class="kd neg">Default rate &gt; 25%</div></div>
+    <div class="k ao"><div class="kl">Warning Locations</div><div class="kv">11</div><div class="kd wrn">Default rate 20&ndash;25%</div></div>
+    <div class="k ag"><div class="kl">OK Locations</div><div class="kv">4</div><div class="kd pos">Default rate &lt; 20%</div></div>
+    <div class="k ab"><div class="kl">Avg Loan Size</div><div class="kv">$85,672</div><div class="kd neu">42-month avg term</div></div>
+    <div class="k at"><div class="kl">Charge-Off Rate</div><div class="kv">4.2%</div><div class="kd neu">Recovery rate: 12.
