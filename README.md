@@ -1,2 +1,2 @@
-# carmart-demo
+# Car-Mart-demo
 Car-Mart Loan Portfolio Health Dashboard — Interactive Prototype
